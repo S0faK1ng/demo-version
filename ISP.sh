@@ -7,18 +7,36 @@ mkdir -p /etc/net/ifaces/{ens19,ens20}
 cat <<EOF > /etc/net/ifaces/ens18/options
 BOOTPROTO=dhcp
 TYPE=eth
+CONFIG_WIRELESS=no
+SYSTEMD_BOOTPROTO=dhcp4
+CONFIG_IPV4=yes
+DISABLED=no
+NM_CONTROLLED=no
+SYSTEMD_CONTROLLED=no
 EOF
 
 # Настраиваем интерфейс ens19 (статический IP)
 cat <<EOF > /etc/net/ifaces/ens19/options
 BOOTPROTO=static
 TYPE=eth
+CONFIG_WIRELESS=no
+SYSTEMD_BOOTPROTO=dhcp4
+CONFIG_IPV4=yes
+DISABLED=no
+NM_CONTROLLED=no
+SYSTEMD_CONTROLLED=no
 EOF
 
 # Настраиваем интерфейс ens20 (статический IP)
 cat <<EOF > /etc/net/ifaces/ens20/options
 BOOTPROTO=static
 TYPE=eth
+CONFIG_WIRELESS=no
+SYSTEMD_BOOTPROTO=dhcp4
+CONFIG_IPV4=yes
+DISABLED=no
+NM_CONTROLLED=no
+SYSTEMD_CONTROLLED=no
 EOF
 
 # Устанавливаем статические адреса для интерфейсов
