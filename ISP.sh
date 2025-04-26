@@ -43,4 +43,6 @@ sed -i 's/#*PermitRootLogin.*/PermitRootLogin yes/' /etc/openssh/sshd_config
 
 # Перезапускаем сервис SSHD
 systemctl restart sshd.service
-#
+
+# Переименовываем машину
+hostnamectl set-hostname isp.au-team.irpo
