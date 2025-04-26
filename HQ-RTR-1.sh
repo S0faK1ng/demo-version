@@ -139,8 +139,7 @@ systemctl restart dnsmasq
 # Создаем пользователя net_admin
 useradd net_admin -m
 passwd net_admin
-P@ssword
-P@ssword
+
 
 # Добавляем пользователя в sudoers
 echo 'net_admin ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
@@ -161,7 +160,6 @@ timedatectl set-ntp 0
 timedatectl
 
 # Настраиваем SSH
-apt-get install openssh-server
 cat <<EOF > /etc/openssh/sshd_config
 Port 22
 MaxAuthTries 2
