@@ -3,10 +3,6 @@
 # Создаем директории для интерфейсов
 mkdir -p /etc/net/ifaces/{ens19,ens20}
 
-# Копируем файлы ipv4address и options
-cp /etc/net/ifaces/lo/ipv4address /etc/net/ifaces/{ens19,ens20}/ipv4address
-cp /etc/net/ifaces/ens18/options /etc/net/ifaces/{ens19,ens20}/options
-
 # Настраиваем интерфейс ens18 (DHCP)
 cat <<EOF > /etc/net/ifaces/ens18/options
 BOOTPROTO=dhcp
@@ -37,7 +33,7 @@ sysctl -p
 # Очищаем существующие правила iptables и настраиваем NAT
 iptables -F
 iptables -t nat -A POSTROUTING -o ens18 -j MASQUERADE
-iptables-save > /etc/network/iptables.rules
+iptables-save > /etc/sysconfig/iptables
 
 # Перезапускаем сеть
 service network restart
