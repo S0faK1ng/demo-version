@@ -172,6 +172,7 @@ EOF
 
 cat <<EOF > /root/banner
 Authorized access only
+
 EOF
 
 systemctl enable --now sshd
