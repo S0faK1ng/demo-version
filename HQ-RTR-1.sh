@@ -1,26 +1,11 @@
 #!/bin/bash
 
 # Создаем директории для интерфейсов
-mkdir -p /etc/net/ifaces/ens18
 mkdir -p /etc/net/ifaces/ens19
 mkdir -p /etc/net/ifaces/ens19.100
 mkdir -p /etc/net/ifaces/ens19.200
 mkdir -p /etc/net/ifaces/ens19.999
 mkdir -p /etc/net/ifaces/iptunnel
-
-# Настраиваем интерфейс ens18 (статический IP)
-cat <<EOF > /etc/net/ifaces/ens18/options
-BOOTPROTO=static
-TYPE=eth
-EOF
-
-cat <<EOF > /etc/net/ifaces/ens18/ipv4address
-172.16.4.2/28
-EOF
-
-cat <<EOF > /etc/net/ifaces/ens18/ipv4route
-default via 172.16.4.1
-EOF
 
 # Настраиваем интерфейс ens19 (статический IP)
 cat <<EOF > /etc/net/ifaces/ens19/options
