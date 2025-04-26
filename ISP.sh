@@ -58,6 +58,10 @@ iptables-save > /etc/sysconfig/iptables
 # Перезапускаем сеть
 service network restart
 
+# Добавляем IPTABLES в автозапуск
+systemctl enable iptables
+systemctl start iptables
+
 # Разрешаем root доступ по SSH
 sed -i 's/#*PermitRootLogin.*/PermitRootLogin yes/' /etc/openssh/sshd_config
 
@@ -66,3 +70,6 @@ systemctl restart sshd.service
 
 # Переименовываем машину
 hostnamectl set-hostname isp.au-team.irpo
+
+# Перезагружаем машину
+reboot
