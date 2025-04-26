@@ -44,10 +44,14 @@ echo '172.16.4.1/28' > /etc/net/ifaces/ens19/ipv4address
 echo '172.16.5.1/28' > /etc/net/ifaces/ens20/ipv4address
 
 # Включаем форвардинг пакетов
-CONFIG_FILE="/etc/net/sysctl.conf"
-sed -i '/^net\.ipv4\.ip_forward=0/s//net.ipv4.ip_forward=1/' "$CONFIG_FILE"
-#sed -i '/^net\.ipv4\.ip_forward=/d' /etc/net/sysctl.conf
-#echo 'net.ipv4.ip_forward=1' >> /etc/net/sysctl.conf
+cat <<EOF > /etc/net/sysctl.conf
+net.ipv4.ip_forward = 1
+net.ipv4.conf.default.rp_filter = 1
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_timestamps = 0
+EOF
+
 sysctl -p
 
 # Очищаем существующие правила iptables и настраиваем NAT
