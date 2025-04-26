@@ -11,6 +11,12 @@ mkdir -p /etc/net/ifaces/iptunnel
 cat <<EOF > /etc/net/ifaces/ens19/options
 BOOTPROTO=static
 TYPE=eth
+CONFIG_WIRELESS=no
+SYSTEMD_BOOTPROTO=dhcp4
+CONFIG_IPV4=yes
+DISABLED=no
+NM_CONTROLLED=no
+SYSTEMD_CONTROLLED=no
 EOF
 
 # Настраиваем VLAN ens19.100
@@ -19,6 +25,12 @@ BOOTPROTO=static
 TYPE=vlan
 HOST=ens19
 VID=100
+CONFIG_WIRELESS=no
+SYSTEMD_BOOTPROTO=dhcp4
+CONFIG_IPV4=yes
+DISABLED=no
+NM_CONTROLLED=no
+SYSTEMD_CONTROLLED=no
 EOF
 
 cat <<EOF > /etc/net/ifaces/ens19.100/ipv4address
@@ -31,6 +43,12 @@ BOOTPROTO=static
 TYPE=vlan
 HOST=ens19
 VID=200
+CONFIG_WIRELESS=no
+SYSTEMD_BOOTPROTO=dhcp4
+CONFIG_IPV4=yes
+DISABLED=no
+NM_CONTROLLED=no
+SYSTEMD_CONTROLLED=no
 EOF
 
 cat <<EOF > /etc/net/ifaces/ens19.200/ipv4address
@@ -43,6 +61,12 @@ BOOTPROTO=static
 TYPE=vlan
 HOST=ens19
 VID=999
+CONFIG_WIRELESS=no
+SYSTEMD_BOOTPROTO=dhcp4
+CONFIG_IPV4=yes
+DISABLED=no
+NM_CONTROLLED=no
+SYSTEMD_CONTROLLED=no
 EOF
 
 cat <<EOF > /etc/net/ifaces/ens19.999/ipv4address
@@ -67,8 +91,14 @@ cat <<EOF > /etc/net/ifaces/iptunnel/ipv4route
 EOF
 
 # Включаем форвардинг пакетов
-sed -i '/^net\.ipv4\.ip_forward=/d' /etc/sysctl.conf
-echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
+cat <<EOF > /etc/net/sysctl.conf
+net.ipv4.ip_forward = 1
+net.ipv4.conf.default.rp_filter = 1
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_timestamps = 0
+EOF
+
 sysctl -p
 
 # Очищаем существующие правила iptables и настраиваем NAT
@@ -78,6 +108,10 @@ iptables-save > /etc/sysconfig/iptables
 
 # Перезапускаем сеть
 service network restart
+
+# Добавляем IPTABLES в автозапуск
+systemctl enable iptables
+systemctl start iptables
 
 # Настраиваем DNS
 cat <<EOF > /etc/resolv.conf
@@ -140,3 +174,9 @@ EOF
 
 systemctl enable --now sshd
 systemctl restart sshd
+
+# Переименовываем машину
+hostnamectl set-hostname hq-rtr.au-team.irpo
+
+# Перезагружаем машину
+reboot
