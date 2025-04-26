@@ -1,164 +1,157 @@
+#!/bin/bash
 
-nano /etc/net/ifaces/ens18/options
+# Создаем директории для интерфейсов
+mkdir -p /etc/net/ifaces/ens18
+mkdir -p /etc/net/ifaces/ens19
+mkdir -p /etc/net/ifaces/ens19.100
+mkdir -p /etc/net/ifaces/ens19.200
+mkdir -p /etc/net/ifaces/ens19.999
+mkdir -p /etc/net/ifaces/iptunnel
 
-    BOOTPROTO=static
-    TYPE=eth
+# Настраиваем интерфейс ens18 (статический IP)
+cat <<EOF > /etc/net/ifaces/ens18/options
+BOOTPROTO=static
+TYPE=eth
+EOF
 
-nano /etc/net/ifaces/ens18/ipv4address
+cat <<EOF > /etc/net/ifaces/ens18/ipv4address
+172.16.4.2/28
+EOF
 
-  172.16.4.2/28
+cat <<EOF > /etc/net/ifaces/ens18/ipv4route
+default via 172.16.4.1
+EOF
 
-nano /etc/net/ifaces/ens18/ipv4route
+# Настраиваем интерфейс ens19 (статический IP)
+cat <<EOF > /etc/net/ifaces/ens19/options
+BOOTPROTO=static
+TYPE=eth
+EOF
 
-  default via 172.16.4.1
+# Настраиваем VLAN ens19.100
+cat <<EOF > /etc/net/ifaces/ens19.100/options
+BOOTPROTO=static
+TYPE=vlan
+HOST=ens19
+VID=100
+EOF
 
-mkdir /etc/net/ifaces/ens19
-mkdir /etc/net/ifaces/ens19.100
-mkdir /etc/net/ifaces/ens19.200
-mkdir /etc/net/ifaces/ens19.999
+cat <<EOF > /etc/net/ifaces/ens19.100/ipv4address
+192.168.1.1/26
+EOF
 
-nano /etc/net/ifaces/ens19/options
+# Настраиваем VLAN ens19.200
+cat <<EOF > /etc/net/ifaces/ens19.200/options
+BOOTPROTO=static
+TYPE=vlan
+HOST=ens19
+VID=200
+EOF
 
-   BOOTPROTO=static
-   TYPE=eth
+cat <<EOF > /etc/net/ifaces/ens19.200/ipv4address
+192.168.2.1/28
+EOF
 
-nano /etc/net/ifaces/ens19.100/options
+# Настраиваем VLAN ens19.999
+cat <<EOF > /etc/net/ifaces/ens19.999/options
+BOOTPROTO=static
+TYPE=vlan
+HOST=ens19
+VID=999
+EOF
 
-   BOOTPROTO=static
-   TYPE=vlan
-   HOST=ens19
-   VID=100
+cat <<EOF > /etc/net/ifaces/ens19.999/ipv4address
+192.168.99.1/29
+EOF
 
-nano /etc/net/ifaces/ens19.100/ipv4address
-
- 192.168.1.1/26
-
-nano /etc/net/ifaces/ens19.200/options
-
-   BOOTPROTO=static
-   TYPE=vlan
-   HOST=ens19
-   VID=200
-
-nano /etc/net/ifaces/ens19.200/ipv4address
-
- 192.168.2.1/28
-
-nano /etc/net/ifaces/ens19.999/options
-
-   BOOTPROTO=static
-   TYPE=vlan
-   HOST=ens19
-   VID=999
-
-nano /etc/net/ifaces/ens19.999/ipv4address
-
- 192.168.99.1/29
-
-mkdir /etc/net/ifaces/iptunnel
-
-nano /etc/net/ifaces/iptunnel/ipv4address
-
+# Настраиваем iptunnel
+cat <<EOF > /etc/net/ifaces/iptunnel/ipv4address
 10.0.0.1/28
+EOF
 
-nano /etc/net/ifaces/iptunnel/options
-
+cat <<EOF > /etc/net/ifaces/iptunnel/options
 TYPE=iptun
 TUNTYPE=gre
 TUNLOCAL=172.16.4.2
 TUNREMOTE=172.16.5.2
 TUNOPTIONS='ttl 64'
+EOF
 
-nano /etc/net/ifaces/iptunnel/ipv4route
-
+cat <<EOF > /etc/net/ifaces/iptunnel/ipv4route
 192.168.4.0/24 via 10.0.0.2
+EOF
 
-nano /etc/net/sysctl.conf
+# Включаем форвардинг пакетов
+sed -i '/^net\.ipv4\.ip_forward=/d' /etc/sysctl.conf
+echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
+sysctl -p
 
- ipv4.net.forward=1
-
+# Очищаем существующие правила iptables и настраиваем NAT
 iptables -F
-iptables -t nat -A POSTROUTING  -o ens18 -j MASQUERADE
-iptables-save
+iptables -t nat -A POSTROUTING -o ens18 -j MASQUERADE
+iptables-save > /etc/sysconfig/iptables
 
+# Перезапускаем сеть
 service network restart
 
-nano /etc/resolv.conf
+# Настраиваем DNS
+cat <<EOF > /etc/resolv.conf
+nameserver 8.8.8.8
+EOF
 
+# Обновляем пакеты и устанавливаем dnsmasq
 apt-get update
-
 apt-get install dnsmasq
 
-nano /etc/dnsmasq.conf
-
+# Настраиваем dnsmasq
+cat <<EOF > /etc/dnsmasq.conf
 no-resolv
 domain=au-team.irpo
 dhcp-range=192.168.2.2,192.168.2.15,999h
 dhcp-option=3,192.168.2.1
 dhcp-option=6,192.168.1.2
 interface=ens19.200
+EOF
 
+# Перезапускаем dnsmasq
 systemctl restart dnsmasq
-
 systemctl status dnsmasq
 
+# Создаем пользователя net_admin
 useradd net_admin -m
-
 passwd net_admin
 
-P@$$word
+# Добавляем пользователя в sudoers
+echo 'net_admin ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
 
-nano /etc/sudoers
-
-net_admin ALL=(ALL:ALL) NOPASSWD: ALL
-
-nano /etc/resolv.conf
-
-nameserver 8.8.8.8
-
-apt-get update
-
+# Настраиваем chrony
 apt-get install chrony
-
-systemctl status chrony
-
-timedatectl
-
-nano /etc/chrony.conf
-
+cat <<EOF > /etc/chrony.conf
 local stratum 5
 allow 192.168.1.0/26
 allow 192.168.2.0/28
 allow 172.16.5.0/28
 allow 192.168.4.0/27
-#pool
-#rtcsync
+EOF
 
 systemctl enable --now chrony
-
 systemctl restart chrony
-
 timedatectl set-ntp 0
-
 timedatectl
 
-apt-get update
-
-apt-get install ssh-server
-
-nano /etc/openssh/sshd_config
-
+# Настраиваем SSH
+apt-get install openssh-server
+cat <<EOF > /etc/openssh/sshd_config
 Port 22
 MaxAuthTries 2
 AllowUsers net_admin
 PermitRootLogin no
 Banner /root/banner
+EOF
 
-nano /root/banner
-
+cat <<EOF > /root/banner
 Authorized access only
+EOF
 
-
-systemctl enable --now sshd 
-
+systemctl enable --now sshd
 systemctl restart sshd
