@@ -180,4 +180,4 @@ systemctl restart sshd
 hostnamectl set-hostname hq-rtr.au-team.irpo
 
 # Перезагружаем машину
-#reboot
+reboot
