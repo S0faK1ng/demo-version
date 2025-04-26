@@ -134,11 +134,13 @@ EOF
 
 # Перезапускаем dnsmasq
 systemctl restart dnsmasq
-systemctl status dnsmasq
+#systemctl status dnsmasq
 
 # Создаем пользователя net_admin
 useradd net_admin -m
 passwd net_admin
+P@ssword
+P@ssword
 
 # Добавляем пользователя в sudoers
 echo 'net_admin ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
@@ -179,4 +181,4 @@ systemctl restart sshd
 hostnamectl set-hostname hq-rtr.au-team.irpo
 
 # Перезагружаем машину
-reboot
+#reboot
