@@ -65,7 +65,6 @@ ansible all -m ping
 apt-get install docker-ce docker-ce-cli containerd.io docker-engine docker-compose -y
 systemctl enable --now docker
 systemctl start docker
-systemctl status docker
 
 # Скачиваем образы MediaWiki и MariaDB
 docker pull mediawiki
