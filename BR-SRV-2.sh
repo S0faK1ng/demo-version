@@ -62,7 +62,7 @@ ssh-copy-id -p 22 net_admin@192.168.1.1
 ansible all -m ping
 
 # Установка и настройка Docker Engine
-apt-get install docker-ce docker-ce-cli containerd.io docker-engine docker-compose-v2 -y
+apt-get install docker-ce containerd.io docker-engine docker-compose-v2 -y
 systemctl enable --now docker
 systemctl start docker
 
