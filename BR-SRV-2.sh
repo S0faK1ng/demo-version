@@ -94,7 +94,7 @@ MEDIAWIKI_DB_PASSWORD: WikiP@ssw0rd
 MEDIAWIKI_DB_NAME: mediawiki
 ports:
 - "8080:80"
-volumes: [ /home/user/mediawiki/LocalSettings.php:/var/www/html/LocalSettings.php ]
+volumes: [ ~/LocalSettings.php:/var/www/html/LocalSettings.php ]
 mariadb_data:
 EOF
 
