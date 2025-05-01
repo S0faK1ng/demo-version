@@ -32,7 +32,7 @@ systemctl restart dnsmasq
 # Создание пользователя для SSH
 useradd sshuser -u 1010
 id sshuser
-passwd sshuser # Введите пароль P@ssw0rd
+passwd sshuser <<< "$(printf '%s\n' P@ssw0rd P@ssw0rd)"
 
 # Предоставление прав sudo пользователю
 echo 'WHEEL_USERS ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
@@ -69,7 +69,7 @@ cat /proc/mdstat
 mdadm --detail -scan > /etc/mdadm.conf
 
 # Форматирование раздела
-fdisk /dev/md0
+fdisk /dev/md0 <<< "$(printf '%s\n' n p 1 2048 4186111 w)"
 n # Новая таблица разделов
 p # Основной раздел
 1 # Первый раздел
@@ -136,7 +136,11 @@ mysql_secure_installation
 # Y Y Y Y Y
 
 # Вход в базу данных MySQL
-mysql -u root -p
+mysql -u root -p <<< "$(printf '%s\n' CREATE DATABASE moodledb;
+CREATE USER moodle IDENTIFIED BY ‘P@ssw0rd’;
+GRANT ALL PRIVILEGES ON moodledb.* TO moodle;
+FLUSH PRIVILEGES;
+exit)"
 
 # Скачивание и распаковка архива Moodle
 curl -L https://github.com/moodle/moodle/archive/refs/tags/v4.5.0.zip > /root/moodle.zip
