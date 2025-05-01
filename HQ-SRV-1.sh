@@ -4,7 +4,7 @@
 apt-get update
 
 # Установка пакета DNSmasq
-apt-get install dnsmasq
+apt-get install dnsmasq -y
 
 # Редактирование файла конфигурации DNSmasq
 cat <<EOF > /etc/dnsmasq.conf
@@ -36,9 +36,6 @@ passwd sshuser # Введите пароль P@ssw0rd
 # Предоставление прав sudo пользователю
 echo 'WHEEL_USERS ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
 usermod -aG wheel sshuser
-
-# Установка OpenSSH
-apt-get install openssh-common
 
 # Изменение настроек SSH
 cat <<EOF > /etc/openssh/sshd_config
@@ -86,7 +83,7 @@ mkdir /raid5
 mount -a
 
 # Установка NFS сервера
-apt-get install nfs-server
+apt-get install nfs-server -y
 
 # Подготовка каталога для экспорта
 mkdir /raid5/nfs
@@ -106,7 +103,7 @@ exportfs -v
 systemctl restart nfs
 
 # Установка служб времени
-apt-get install systemd-timesyncd
+apt-get install systemd-timesyncd -y
 
 # Настройка службы времени
 cat <<EOF > /etc/systemd/timesyncd.conf
@@ -122,7 +119,7 @@ timedatectl timesync-status
 apt-get install apache2 php8.2 apache2-mod_php8.2 mariadb-server \
 php8.2-opcache php8.2-curl php8.2-gd php8.2-intl php8.2-mysqli \
 php8.2-xml php8.2-xmlrpc php8.2-ldap php8.2-zip php8.2-soap \
-php8.2-mbstring php8.2-json php8.2-xmlreader php8.2-fileinfo php8.2-sodium
+php8.2-mbstring php8.2-json php8.2-xmlreader php8.2-fileinfo php8.2-sodium -y
 
 # Запуск Apache и MySQL
 systemctl enable --now httpd2 mysql
