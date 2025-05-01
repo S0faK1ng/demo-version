@@ -63,7 +63,7 @@ cat <<EOF > /etc/hosts
 EOF
 
 # Создаем новую доменную структуру с использованием samba-tool
-samba-tool domain provision
+samba-tool domain provision <<< "$(printf '%s\n' AU-TEAM.IRPO AU-TEAM dc SAMBA_INTERNAL 192.168.1.10 123qweR% 123qweR%)"
 
 # Перемещаем конфиг KRB5 в нужный каталог
 mv -f /var/lib/samba/private/krb5.conf /etc/krb5.conf
