@@ -138,15 +138,6 @@ mysql_secure_installation
 # Вход в базу данных MySQL
 mysql -u root -p
 
-# SQL команды для базы данных Moodle
-<<EOF
-CREATE DATABASE moodledb;
-CREATE USER 'Moodle'@'localhost' IDENTIFIED BY 'P@ssw0rd';
-GRANT ALL PRIVILEGES ON moodledb.* TO 'Moodle'@'localhost';
-FLUSH PRIVILEGES;
-EXIT;
-EOF
-
 # Скачивание и распаковка архива Moodle
 curl -L https://github.com/moodle/moodle/archive/refs/tags/v4.5.0.zip > /root/moodle.zip
 unzip /root/moodle.zip -d /var/www/html
