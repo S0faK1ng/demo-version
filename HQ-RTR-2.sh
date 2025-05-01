@@ -3,6 +3,7 @@
 # Настройка NAT перенаправления порта TCP 2024 на внутренний сервер
 echo "Настраиваем NAT..."
 iptables -t nat -A PREROUTING -p tcp -d 192.168.1.1 --dport 2024 -j DNAT --to-destination 192.168.1.10:2024
+iptables-save > /etc/sysconfig/iptables
 
 # Очистка правил NAT
 echo "Очищаем правила NAT..."
