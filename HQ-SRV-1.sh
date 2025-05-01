@@ -126,6 +126,7 @@ php8.2-mbstring php8.2-json php8.2-xmlreader php8.2-fileinfo php8.2-sodium
 
 # Запуск Apache и MySQL
 systemctl enable --now httpd2 mysql
+service mysqld start
 
 # Безопасная настройка MySQL
 mysql_secure_installation
