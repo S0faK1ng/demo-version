@@ -32,11 +32,11 @@ systemctl disable --now chronyd || { echo 'Ошибка отключения Chr
 
 # Устанавливаем Systemd Timesync
 echo "Устанавливаем Systemd Timesync..."
-apt-get update && sudo apt-get install systemd-timesyncd || { echo 'Ошибка установки Systemd Timesync!'; exit 1; }
+apt-get update && apt-get install systemd-timesyncd || { echo 'Ошибка установки Systemd Timesync!'; exit 1; }
 
 # Настраиваем конфиг timesyncd
 echo "Настраиваем timesyncd..."
-cat <<EOF | sudo tee /etc/systemd/timesyncd.conf >&2
+cat <<EOF | tee /etc/systemd/timesyncd.conf >&2
 [Time]
 NTP=192.168.1.1
 EOF
@@ -63,7 +63,7 @@ passwd sshuser <<< "$(printf '%s\n' P@ssw0rd P@ssw0rd)" || { echo 'Ошибка 
 
 # Редактируем sudoers-файл
 echo "Редактируем sudoers-файл..."
-cat <<EOF | sudo tee -a /etc/sudoers >&2
+cat <<EOF | tee -a /etc/sudoers >&2
 WHEEL_USERS ALL=(ALL:ALL) NOPASSWD: ALL
 EOF
 
@@ -71,13 +71,9 @@ EOF
 echo "Добавляем пользователя в группу wheel..."
 usermod -aG wheel sshuser || { echo 'Ошибка добавления в группу!'; exit 1; }
 
-# Устанавливаем OpenSSH Server
-echo "Устанавливаем OpenSSH Server..."
-apt-get update && sudo apt-get install openssh-server || { echo 'Ошибка установки SSH!'; exit 1; }
-
 # Настраиваем sshd_config
 echo "Настраиваем SSH-сервер..."
-cat <<EOF | sudo tee /etc/ssh/sshd_config >&2
+cat <<EOF | tee /etc/ssh/sshd_config >&2
 Port 22
 MaxAuthTries 2
 AllowUsers net_admin
@@ -91,11 +87,11 @@ sh -c 'echo "Authorized access only" > /root/banner'
 
 # Активируем и перезапускаем SSH-сервис
 echo "Перезапускаем SSH-сервис..."
-systemctl enable --now ssh && sudo systemctl restart ssh || { echo 'Ошибка запуска SSH!'; exit 1; }
+systemctl enable --now ssh && systemctl restart ssh || { echo 'Ошибка запуска SSH!'; exit 1; }
 
 # Устанавливаем браузер Яндекс
 echo "Устанавливаем Яндекс Браузер..."
-apt-get update && sudo apt-get install yandex-browser-stable || { echo 'Ошибка установки Яндекс-Браузера!'; exit 1; }
+apt-get update && apt-get install yandex-browser-stable || { echo 'Ошибка установки Яндекс-Браузера!'; exit 1; }
 
 # Сообщаем об успешном завершении
 echo "Скрипт успешно выполнен!"
