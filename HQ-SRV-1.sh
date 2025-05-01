@@ -26,6 +26,7 @@ address=/br-srv.au-team.irpo/192.168.4.10
 EOF
 
 # Рестарт службы DNSmasq
+systemctl enable --now dnsmasq
 systemctl restart dnsmasq
 
 # Создание пользователя для SSH
@@ -100,6 +101,7 @@ exportfs -a
 exportfs -v
 
 # Перезапуск NFS
+systemctl enable --now nfs
 systemctl restart nfs
 
 # Установка служб времени
@@ -122,7 +124,7 @@ php8.2-xml php8.2-xmlrpc php8.2-ldap php8.2-zip php8.2-soap \
 php8.2-mbstring php8.2-json php8.2-xmlreader php8.2-fileinfo php8.2-sodium -y
 
 # Запуск Apache и MySQL
-systemctl enable --now httpd2 mysql
+systemctl enable --now httpd2 mysql mysqld
 service mysqld start
 
 # Безопасная настройка MySQL
