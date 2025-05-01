@@ -73,30 +73,36 @@ docker pull mariadb
 # Конфигурация контейнера MediaWiki и базы данных
 cat <<EOF > /root/wiki.yml
 services:
-mariadb:
-image: mariadb
-container_name: mariadb
-restart: always
-environment:
-MYSQL_ROOT_PASSWORD: 123qweR%
-MYSQL_DATABASE: mediawiki
-MYSQL_USER: wiki
-MYSQL_PASSWORD: WikiP@ssw0rd
-volumes: [ mariadb_data:/var/lib/mysql ]
-wiki:
-image: mediawiki
-container_name: wiki
-restart: always
-environment:
-MEDIAWIKI_DB_HOST: mariadb
-MEDIAWIKI_DB_USER: wiki
-MEDIAWIKI_DB_PASSWORD: WikiP@ssw0rd
-MEDIAWIKI_DB_NAME: mediawiki
-ports:
-- "8080:80"
-volumes: [ ~/LocalSettings.php:/var/www/html/LocalSettings.php ]
-mariadb_data:
+  MediaWiki:
+    image: mediawiki
+    container_name: wiki
+    restart: always
+    ports:
+      - 8080:80
+    links:
+      - database
+    volumes:  
+      - images:/var/www/html/images
+      #- ./LocalSettings.php:/var/www/html/LocalSettings.php
+  database:
+    image: mariadb
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: 123qweR%
+      MYSQL_DATABASE: mediawiki
+      MYSQL_USER: wiki
+      MYSQL_PASSWORD: WikiP@ssw0rd
+    volumes: 
+      - dbvolume:/var/lib/mysql
+volumes:
+  dbvolume:
+      external: true
+  images:
 EOF
+
+docker volume create dbvolume
+
+docker volume ls
 
 # Запускаем контейнеры
 docker-compose -f /root/wiki.yml up -d
