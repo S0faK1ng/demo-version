@@ -15,7 +15,7 @@ mkdir -p /mnt/nfs || { echo 'Ошибка создания директории!
 # Редактируем /etc/fstab для автоматического монтирования
 echo "Настраиваем автоматическое монтирование..."
 cat <<EOF | tee -a /etc/fstab >&2
-192.168.1.2:/raid5/nfs  /mnt/nfs  nfs  defaults  0  0
+192.168.1.10:/raid5/nfs  /mnt/nfs  nfs  defaults  0  0
 EOF
 
 # Пробуем смонтировать раздел
