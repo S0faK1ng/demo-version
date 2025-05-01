@@ -66,7 +66,7 @@ systemctl start iptables
 
 # Создаем администратора сети
 useradd net_admin -m
-passwd net_admin # Здесь введите пароль для нового пользователя
+passwd net_admin <<< "$(printf '%s\n' P@$$word P@$$word)"
 
 # Даем права sudo новому пользователю
 echo 'net_admin ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
