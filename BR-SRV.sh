@@ -15,27 +15,27 @@ echo '%WHEEL_USERS ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
 # Добавляем пользователя sshuser в группу WHEEL
 usermod -aG wheel sshuser
 
-# Устанавливаем пакет OpenSSH Server
-apt-get install openssh-server -y
-
-# Настраиваем конфигурационный файл SSHD
-sed -i '/^Port/c\Port 2024' /etc/ssh/sshd_config
-sed -i '/^MaxAuthTries/c\MaxAuthTries 2' /etc/ssh/sshd_config
-sed -i '/^AllowUsers/c\AllowUsers sshuser' /etc/ssh/sshd_config
-sed -i '/^PermitRootLogin/c\PermitRootLogin no' /etc/ssh/sshd_config
-sed -i '/^Banner/c\Banner /root/banner' /etc/ssh/sshd_config
+# Настраиваем SSH
+cat <<EOF > /etc/openssh/sshd_config
+Port 2024
+MaxAuthTries 2
+AllowUsers sshuser
+PermitRootLogin no
+Banner /root/banner
+EOF
 
 # Создаем файл баннера входа
-echo 'Authorized Access Only!' > /root/banner
+cat <<EOF > /root/banner
+Authorized access only
+
+EOF
 
 # Включаем службу SSH сразу и автоматически при загрузке системы
 systemctl enable --now sshd
-
-# Перезагружаем сервис SSH
 systemctl restart sshd
 
 # Удаляем предустановленный BIND
-apt-get remove bind9* -y
+apt-get remove bind9 -y
 
 # Устанавливаем сервер Samba Active Directory Domain Controller
 apt-get install task-samba-dc -y
@@ -43,14 +43,22 @@ apt-get install task-samba-dc -y
 # Обновляем файл resolv.conf, оставляя локальную запись DNS
 sed -i '/^nameserver/d' /etc/resolv.conf && echo 'nameserver 127.0.0.1' >> /etc/resolv.conf
 
+cat <<EOF > /etc/resolv.conf
+nameserver 8.8.8.8
+nameserver 127.0.0.1
+EOF
+
+
 # Очищаем старую конфигурацию Samba
 rm -rf /etc/samba/smb.conf
 
 # Изменяем имя хоста на требуемое значение
-hostnamectl set-hostname br-srv.au-team.irpo && exec bash
+hostnamectl set-hostname br-srv.au-team.irpo; exec bash
 
 # Обновляем hosts-файл
-sed -i '/^192\.168\.4\.10/d' /etc/hosts && echo '192.168.4.10 br-srv.au-team.irpo' >> /etc/hosts
+cat <<EOF > /etc/hosts
+192.168.4.10	br-srv.au-team.irpo
+EOF
 
 # Создаем новую доменную структуру с использованием samba-tool
 samba-tool domain provision \
