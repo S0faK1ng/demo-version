@@ -138,7 +138,7 @@ systemctl restart dnsmasq
 
 # Создаем пользователя net_admin
 useradd net_admin -m
-passwd net_admin
+passwd net_admin <<< "$(printf '%s\n' P@$$word P@$$word)"
 
 
 # Добавляем пользователя в sudoers
