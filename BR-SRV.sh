@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Создаем нового пользователя с UID 1010
 useradd sshuser -u 1010
 
