@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#обновляем пакеты
+apt-get update
+
 # Создаем нового пользователя с UID 1010
 useradd sshuser -u 1010
 
