@@ -2,15 +2,15 @@
 
 # Обновляем список пакетов
 echo "Обновляем систему..."
-sudo apt-get update || { echo 'Ошибка обновления!'; exit 1; }
+apt-get update || { echo 'Ошибка обновления!'; exit 1; }
 
 # Устанавливаем NFS client
 echo "Устанавливаем NFS-client..."
-sudo apt-get install nfs-common || { echo 'Ошибка установки NFS-common!'; exit 1; }
+apt-get install nfs-common || { echo 'Ошибка установки NFS-common!'; exit 1; }
 
 # Создаем точку монтирования
 echo "Создаем точку монтирования..."
-sudo mkdir -p /mnt/nfs || { echo 'Ошибка создания директории!'; exit 1; }
+mkdir -p /mnt/nfs || { echo 'Ошибка создания директории!'; exit 1; }
 
 # Редактируем /etc/fstab для автоматического монтирования
 echo "Настраиваем автоматическое монтирование..."
@@ -20,23 +20,23 @@ EOF
 
 # Пробуем смонтировать раздел
 echo "Монтируем раздел..."
-sudo mount -a && sudo mount -v || { echo 'Ошибка монтирования!'; exit 1; }
+mount -a && sudo mount -v || { echo 'Ошибка монтирования!'; exit 1; }
 
 # Тестовая запись файла
 echo "Тестовая запись файла..."
-sudo touch /mnt/nfs/bbbbb || { echo 'Ошибка записи файла!'; exit 1; }
+touch /mnt/nfs/bbbbb || { echo 'Ошибка записи файла!'; exit 1; }
 
 # Отключаем службу Chrony
 echo "Отключаем службу Chrony..."
-sudo systemctl disable --now chronyd || { echo 'Ошибка отключения Chrony!'; exit 1; }
+systemctl disable --now chronyd || { echo 'Ошибка отключения Chrony!'; exit 1; }
 
 # Проверяем статус Chrony
 echo "Проверяем статус Chrony..."
-sudo systemctl status chronyd
+systemctl status chronyd
 
 # Устанавливаем Systemd Timesync
 echo "Устанавливаем Systemd Timesync..."
-sudo apt-get update && sudo apt-get install systemd-timesyncd || { echo 'Ошибка установки Systemd Timesync!'; exit 1; }
+apt-get update && sudo apt-get install systemd-timesyncd || { echo 'Ошибка установки Systemd Timesync!'; exit 1; }
 
 # Настраиваем конфиг timesyncd
 echo "Настраиваем timesyncd..."
@@ -47,23 +47,23 @@ EOF
 
 # Активируем сервис TimeSync
 echo "Активируем сервис TimeSync..."
-sudo systemctl enable --now systemd-timesyncd || { echo 'Ошибка активации TimeSync!'; exit 1; }
+systemctl enable --now systemd-timesyncd || { echo 'Ошибка активации TimeSync!'; exit 1; }
 
 # Статус синхронизации времени
 echo "Просмотр состояния синхронизации времени..."
-sudo timedatectl timesync-status
+timedatectl timesync-status
 
 # Создаем пользователя SSH
 echo "Создаем пользователя SSH..."
-sudo useradd sshuser -u 1010 || { echo 'Ошибка добавления пользователя!'; exit 1; }
+useradd sshuser -u 1010 || { echo 'Ошибка добавления пользователя!'; exit 1; }
 
 # Проверяем данные пользователя
 echo "Проверяем идентификатор пользователя..."
-sudo id sshuser
+id sshuser
 
 # Меняем пароль пользователя
 echo "Меняем пароль пользователя..."
-sudo passwd sshuser <<< "$(printf '%s\n' P@ssw0rd P@ssw0rd)" || { echo 'Ошибка смены пароля!'; exit 1; }
+passwd sshuser <<< "$(printf '%s\n' P@ssw0rd P@ssw0rd)" || { echo 'Ошибка смены пароля!'; exit 1; }
 
 # Редактируем sudoers-файл
 echo "Редактируем sudoers-файл..."
@@ -73,11 +73,11 @@ EOF
 
 # Добавляем пользователя в группу wheel
 echo "Добавляем пользователя в группу wheel..."
-sudo usermod -aG wheel sshuser || { echo 'Ошибка добавления в группу!'; exit 1; }
+usermod -aG wheel sshuser || { echo 'Ошибка добавления в группу!'; exit 1; }
 
 # Устанавливаем OpenSSH Server
 echo "Устанавливаем OpenSSH Server..."
-sudo apt-get update && sudo apt-get install openssh-server || { echo 'Ошибка установки SSH!'; exit 1; }
+apt-get update && sudo apt-get install openssh-server || { echo 'Ошибка установки SSH!'; exit 1; }
 
 # Настраиваем sshd_config
 echo "Настраиваем SSH-сервер..."
@@ -91,15 +91,15 @@ EOF
 
 # Создаем баннер авторизации
 echo "Создаем баннер авторизации..."
-sudo sh -c 'echo "Authorized access only" > /root/banner'
+sh -c 'echo "Authorized access only" > /root/banner'
 
 # Активируем и перезапускаем SSH-сервис
 echo "Перезапускаем SSH-сервис..."
-sudo systemctl enable --now ssh && sudo systemctl restart ssh || { echo 'Ошибка запуска SSH!'; exit 1; }
+systemctl enable --now ssh && sudo systemctl restart ssh || { echo 'Ошибка запуска SSH!'; exit 1; }
 
 # Устанавливаем браузер Яндекс
 echo "Устанавливаем Яндекс Браузер..."
-sudo apt-get update && sudo apt-get install yandex-browser-stable || { echo 'Ошибка установки Яндекс-Браузера!'; exit 1; }
+apt-get update && sudo apt-get install yandex-browser-stable || { echo 'Ошибка установки Яндекс-Браузера!'; exit 1; }
 
 # Сообщаем об успешном завершении
 echo "Скрипт успешно выполнен!"
