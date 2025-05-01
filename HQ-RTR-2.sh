@@ -12,7 +12,8 @@ iptables -F -t nat
 echo "Перезагружаем rc.local..."
 bash /etc/rc.local
 
-mkdir /var/www/html/
+mkdir /var/www
+mkdir /var/www/html
 
 # Редактирование конфигурационного файла Moodle
 echo "Редактируем config.php..."
@@ -23,7 +24,7 @@ EOF
 
 # Установка Nginx веб-сервера
 echo "Устанавливаем Nginx..."
-apt update && apt install nginx -y
+apt-get update && apt-get install nginx -y
 
 # Конфигурация прокси-серверов для доменов
 echo "Создаем конфиг Nginx для виртуальных хостов..."
