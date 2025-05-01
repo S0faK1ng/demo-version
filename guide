@@ -1,0 +1,141 @@
+!!!!!!!!Выполнять друг за другом!!!!!!!!
+
+-------------ISP---------------
+
+apt-get install wget
+wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/ISP.sh
+chmod +x ISP.sh
+./ISP.sh
+
+-------------HQ-RTR-1---------------
+
+nano /etc/net/ifaces/ens18/options
+
+    BOOTPROTO=static
+    TYPE=eth
+
+nano /etc/net/ifaces/ens18/ipv4address
+
+  172.16.4.2/28
+
+nano /etc/net/ifaces/ens18/ipv4route
+
+  default via 172.16.4.1
+
+service network restart
+
+apt-get install wget
+wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/HQ-RTR-1.sh
+wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/HQ-RTR-2.sh
+chmod +x HQ-RTR-1.sh
+chmod +x HQ-RTR-2.sh
+./HQ-RTR-1.sh
+
+
+
+----BR-RTR-1-------
+
+nano /etc/net/ifaces/ens18/options
+
+    BOOTPROTO=static
+    TYPE=eth
+
+nano /etc/net/ifaces/ens18/ipv4address
+
+  172.16.5.2/28
+
+nano /etc/net/ifaces/ens18/ipv4route
+
+  default via 172.16.5.1
+
+service network restart
+
+apt-get install wget
+wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/BR-RTR-1.sh
+wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/BR-RTR-2.sh
+chmod +x BR-RTR-1.sh
+chmod +x BR-RTR-2.sh
+./BR-RTR-1.sh
+
+
+
+
+
+------HQ-SRV------
+
+nano /etc/net/ifaces/ens18/options
+
+    BOOTPROTO=static
+    TYPE=eth
+
+nano /etc/net/ifaces/ens18/ipv4address
+  192.168.1.10/26
+
+nano /etc/net/ifaces/ens18/ipv4route
+
+  default via 192.168.1.1
+
+service network restart
+
+apt-get install wget
+wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/HQ-SRV.sh
+chmod +x HQ-SRV.sh
+./HQ-SRV.sh
+
+Enter Y Y 123qweR% Y Y Y Y Y
+
+123qweR%
+
+CREATE DATABASE moodledb;
+CREATE USER moodle IDENTIFIED BY ‘P@ssw0rd’;
+GRANT ALL PRIVILEGES ON moodledb.* TO moodle;
+FLUSH PRIVILEGES;
+exit
+
+
+------HQ-CLI------
+
+nano /etc/resolv.conf
+
+nameserver 8.8.8.8
+
+
+apt-get install wget
+wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/HQ-CLI.sh
+chmod +x HQ-CLI.sh
+./HQ-CLI.sh
+
+
+
+
+
+------BR-SRV------
+
+nano /etc/net/ifaces/ens18/options
+
+    BOOTPROTO=static
+    TYPE=eth
+
+nano /etc/net/ifaces/ens18/ipv4address
+  192.168.4.10/28
+
+nano /etc/net/ifaces/ens18/ipv4route
+
+  default via 192.168.4.1
+
+service network restart
+
+
+apt-get install wget
+wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/BR-SRV-1.sh
+wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/BR-SRV-2.sh
+wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/LocalSettings.php
+chmod +x BR-SRV-1.sh
+chmod +x BR-SRV-2.sh
+./BR-SRV-1.sh
+./BR-SRV-2.sh
+
+----BR-RTR-2-----
+
+./BR-RTR-2.sh
+
