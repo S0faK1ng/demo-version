@@ -44,8 +44,6 @@ apt-get remove bind9 -y
 apt-get install task-samba-dc -y
 
 # Обновляем файл resolv.conf, оставляя локальную запись DNS
-sed -i '/^nameserver/d' /etc/resolv.conf && echo 'nameserver 127.0.0.1' >> /etc/resolv.conf
-
 cat <<EOF > /etc/resolv.conf
 domain ak.local
 nameserver 8.8.8.8
@@ -65,24 +63,14 @@ cat <<EOF > /etc/hosts
 EOF
 
 # Создаем новую доменную структуру с использованием samba-tool
-samba-tool domain provision \
---domain="AU-TEAM.IRPO" \
---adminpass='123qweR%' \
---server-role="dc" \
---use-rfc2307 \
---dns-backend=SAMBA_INTERNAL \
---option="interfaces=eth0" \
---option="bind interfaces only=true" \
---option="ldap server require strong auth=false" \
---realm="AU-TEAM.IRPO" \
---server-role="dc"
+samba-tool domain provision
 
 # Перемещаем конфиг KRB5 в нужный каталог
 mv -f /var/lib/samba/private/krb5.conf /etc/krb5.conf
 
 # Запускаем службы Samba и добавляем их в автозагрузку
-systemctl enable samba
-systemctl start samba
+systemctl enable smb
+systemctl start smb
 
 # Создаем дополнительные файлы автозапуска
 cat <<EOF > /etc/rc.d/rc.local
@@ -99,14 +87,14 @@ chmod +x /etc/rc.d/rc.local
 reboot
 
 # После перезагрузки создаем новых пользователей и групп в AD
-samba-tool user create user1.hq --password='123qweR%'
-samba-tool user create user2.hq --password='123qweR%'
-samba-tool user create user3.hq --password='123qweR%'
-samba-tool user create user4.hq --password='123qweR%'
-samba-tool user create user5.hq --password='123qweR%'
+samba-tool user create user1.hq 123qweR%
+samba-tool user create user2.hq 123qweR%
+samba-tool user create user3.hq 123qweR%
+samba-tool user create user4.hq 123qweR%
+samba-tool user create user5.hq 123qweR%
 
 # Создаем новую группу HQ и добавляем туда всех пользователей
-samba-tool group create hq
+samba-tool group add hq
 samba-tool group addmembers hq user1.hq,user2.hq,user3.hq,user4.hq,user5.hq
 
 # Обновляем систему
@@ -116,12 +104,13 @@ apt-get update
 apt-get install systemd-timesyncd -y
 
 # Настройка синхронизации времени с внутренним источником
-sed -i '/^\[Time\]/a NTP=172.16.4.2' /etc/systemd/timesyncd.conf
+cat <<EOF > /etc/systemd/timesyncd.conf
+[Time]
+NTP=172.16.4.2
+EOF
 
 # Активируем и запускаем службу TimeSync
 systemctl enable --now systemd-timesyncd
-
-# Проверка статуса синхронизации времени
 timedatectl timesync-status
 
 # Установка Ansible для автоматизации администрирования узлов сети
@@ -146,7 +135,7 @@ ansible_python_interpreter=/usr/bin/python3
 EOF
 
 # Генерация ключа RSA для авторизации по SSH
-ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa
+ssh-keygen -t rsa
 
 # Копирование публичного ключа на другие узлы
 ssh-copy-id -p 22 net_admin@192.168.4.1
