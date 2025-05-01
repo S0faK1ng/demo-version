@@ -30,10 +30,6 @@ touch /mnt/nfs/bbbbb || { echo 'Ошибка записи файла!'; exit 1; 
 echo "Отключаем службу Chrony..."
 systemctl disable --now chronyd || { echo 'Ошибка отключения Chrony!'; exit 1; }
 
-# Проверяем статус Chrony
-echo "Проверяем статус Chrony..."
-systemctl status chronyd
-
 # Устанавливаем Systemd Timesync
 echo "Устанавливаем Systemd Timesync..."
 apt-get update && sudo apt-get install systemd-timesyncd || { echo 'Ошибка установки Systemd Timesync!'; exit 1; }
