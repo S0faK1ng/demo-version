@@ -39,8 +39,8 @@ cat <<EOF > /etc/ansible/hosts
 [hq]
 hq-srv ansible_host=sshuser@192.168.1.10 ansible_port=2024
 hq-cli ansible_host=sshuser@192.168.2.10 ansible_port=2024
-hq-rtr ansible_host=net_admin@192.168.1.1 ansible_port=2024
-br-rtr ansible_host=net_admin@192.168.4.1 ansible_port=2024
+hq-rtr ansible_host=net_admin@192.168.1.1 ansible_port=22
+br-rtr ansible_host=net_admin@192.168.4.1 ansible_port=22
 EOF
 
 # Настройки Python-интерпретатора для Ansible
