@@ -12,6 +12,8 @@ iptables -F -t nat
 echo "Перезагружаем rc.local..."
 bash /etc/rc.local
 
+mkdir /var/www/html/
+
 # Редактирование конфигурационного файла Moodle
 echo "Редактируем config.php..."
 nano /var/www/html/config.php << EOF
