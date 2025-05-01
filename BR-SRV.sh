@@ -44,6 +44,7 @@ apt-get install task-samba-dc -y
 sed -i '/^nameserver/d' /etc/resolv.conf && echo 'nameserver 127.0.0.1' >> /etc/resolv.conf
 
 cat <<EOF > /etc/resolv.conf
+domain ak.local
 nameserver 8.8.8.8
 nameserver 127.0.0.1
 EOF
