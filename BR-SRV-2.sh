@@ -105,7 +105,7 @@ docker volume create dbvolume
 docker volume ls
 
 # Запускаем контейнеры
-docker-compose -f /root/wiki.yml up -d
+docker compose -f /root/wiki.yml up -d
 
 # Удаление старого LocalSettings.php и перенос текущего в новое местоположение
 #rm -rf /root/LocalSettings.php
