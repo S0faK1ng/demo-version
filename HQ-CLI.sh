@@ -87,7 +87,7 @@ sh -c 'echo "Authorized access only" > /root/banner'
 
 # Активируем и перезапускаем SSH-сервис
 echo "Перезапускаем SSH-сервис..."
-systemctl enable --now ssh && systemctl restart ssh || { echo 'Ошибка запуска SSH!'; exit 1; }
+systemctl enable --now sshd && systemctl restart sshd || { echo 'Ошибка запуска SSH!'; exit 1; }
 
 # Устанавливаем браузер Яндекс
 echo "Устанавливаем Яндекс Браузер..."
