@@ -50,7 +50,7 @@ ansible_python_interpreter=/usr/bin/python3
 EOF
 
 # Генерация ключа RSA для авторизации по SSH
-ssh-keygen -t rsa
+ssh-keygen -t rsa <<< "$(printf '%s\n' /root/.ssh/id_rsa)"
 
 # Копирование публичного ключа на другие узлы
 ssh-copy-id -p 22 net_admin@192.168.4.1
