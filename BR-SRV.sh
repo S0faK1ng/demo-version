@@ -16,7 +16,7 @@ echo '%WHEEL_USERS ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
 usermod -aG wheel sshuser
 
 # Устанавливаем пакет OpenSSH Server
-apt-get install openssh-server
+apt-get install openssh-server -y
 
 # Настраиваем конфигурационный файл SSHD
 sed -i '/^Port/c\Port 2024' /etc/ssh/sshd_config
@@ -35,10 +35,10 @@ systemctl enable --now sshd
 systemctl restart sshd
 
 # Удаляем предустановленный BIND
-apt-get remove bind9*
+apt-get remove bind9* -y
 
 # Устанавливаем сервер Samba Active Directory Domain Controller
-apt-get install task-samba-dc
+apt-get install task-samba-dc -y
 
 # Обновляем файл resolv.conf, оставляя локальную запись DNS
 sed -i '/^nameserver/d' /etc/resolv.conf && echo 'nameserver 127.0.0.1' >> /etc/resolv.conf
@@ -101,7 +101,7 @@ samba-tool group addmembers hq user1.hq,user2.hq,user3.hq,user4.hq,user5.hq
 apt-get update
 
 # Устанавливаем утилиту синхронизации времени Systemd Timesyncd
-apt-get install systemd-timesyncd
+apt-get install systemd-timesyncd -y
 
 # Настройка синхронизации времени с внутренним источником
 sed -i '/^\[Time\]/a NTP=172.16.4.2' /etc/systemd/timesyncd.conf
@@ -113,7 +113,7 @@ systemctl enable --now systemd-timesyncd
 timedatectl timesync-status
 
 # Установка Ansible для автоматизации администрирования узлов сети
-apt-get install ansible
+apt-get install ansible -y
 
 # Создание структуры директорий Ansible
 mkdir -p /etc/ansible
@@ -146,7 +146,7 @@ ssh-copy-id -p 22 net_admin@192.168.1.1
 ansible all -m ping
 
 # Установка и настройка Docker Engine
-apt-get install docker-ce docker-ce-cli containerd.io
+apt-get install docker-ce docker-ce-cli containerd.io -y
 systemctl enable --now docker
 systemctl status docker
 
