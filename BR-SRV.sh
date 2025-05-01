@@ -55,7 +55,7 @@ EOF
 rm -rf /etc/samba/smb.conf
 
 # Изменяем имя хоста на требуемое значение
-hostnamectl set-hostname br-srv.au-team.irpo; exec bash
+hostnamectl set-hostname br-srv.au-team.irpo
 
 # Обновляем hosts-файл
 cat <<EOF > /etc/hosts
