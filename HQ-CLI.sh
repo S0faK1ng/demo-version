@@ -6,7 +6,7 @@ apt-get update || { echo 'Ошибка обновления!'; exit 1; }
 
 # Устанавливаем NFS client
 echo "Устанавливаем NFS-client..."
-apt-get install nfs-common || { echo 'Ошибка установки NFS-common!'; exit 1; }
+apt-get install nfs-client || { echo 'Ошибка установки NFS-common!'; exit 1; }
 
 # Создаем точку монтирования
 echo "Создаем точку монтирования..."
