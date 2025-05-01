@@ -108,9 +108,9 @@ docker volume ls
 docker-compose -f /root/wiki.yml up -d
 
 # Удаление старого LocalSettings.php и перенос текущего в новое местоположение
-rm -rf /root/LocalSettings.php
-mkdir /root/mediawiki
-mv /home/sshuser/LocalSettings.php /root/mediawiki/
+#rm -rf /root/LocalSettings.php
+#mkdir /root/mediawiki
+#mv /home/sshuser/LocalSettings.php /root/mediawiki/
 
-# Финальная сборка докера
-docker-compose -f /root/wiki.yml up -d
+## Финальная сборка докера
+#docker-compose -f /root/wiki.yml up -d
