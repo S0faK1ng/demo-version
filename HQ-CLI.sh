@@ -93,6 +93,3 @@ systemctl enable --now sshd && systemctl restart sshd || { echo 'Ошибка з
 echo "Устанавливаем Яндекс Браузер..."
 apt-get update && apt-get install yandex-browser-stable || { echo 'Ошибка установки Яндекс-Браузера!'; exit 1; }
 
-# Сообщаем об успешном завершении
-echo "Скрипт успешно выполнен!"
-```
