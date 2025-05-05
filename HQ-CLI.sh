@@ -73,7 +73,7 @@ usermod -aG wheel sshuser || { echo 'Ошибка добавления в гру
 
 # Настраиваем sshd_config
 echo "Настраиваем SSH-сервер..."
-cat <<EOF | tee /etc/ssh/sshd_config >&2
+cat <<EOF | tee /etc/openssh/sshd_config >&2
 Port 22
 MaxAuthTries 2
 AllowUsers net_admin
