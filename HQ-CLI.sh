@@ -59,7 +59,7 @@ id sshuser
 
 # Меняем пароль пользователя
 echo "Меняем пароль пользователя..."
-passwd sshuser <<< "$(printf '%s\n' P@ssw0rd P@ssw0rd)" || { echo 'Ошибка смены пароля!'; exit 1; }
+passwd sshuser
 
 # Редактируем sudoers-файл
 echo "Редактируем sudoers-файл..."
