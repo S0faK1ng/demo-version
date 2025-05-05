@@ -1,10 +1,8 @@
 #!/bin/bash
 
-
-
 # Редактирование конфигурационного файла resolv
 echo "Редактируем resolv"
-nano /etc/resolv.conf << EOF
+cat <<EOF > /etc/resolv.conf
 nameserver 8.8.8.8
 EOF
 
@@ -26,8 +24,7 @@ mkdir /var/www/html
 
 # Редактирование конфигурационного файла Moodle
 echo "Редактируем config.php..."
-nano /var/www/html/config.php << EOF
-<?php
+cat <<EOF > /var/www/html/config.php
 \$CFG->wwwroot   = 'http://moodle.au-team.irpo';
 EOF
 
@@ -37,7 +34,7 @@ apt-get update && apt-get install nginx -y
 
 # Конфигурация прокси-серверов для доменов
 echo "Создаем конфиг Nginx для виртуальных хостов..."
-cat > /etc/nginx/sites-available/proxy << EOF
+cat <<EOF > /etc/nginx/sites-available/proxy
 server {
     listen 80;
     server_name moodle.au-team.irpo;
@@ -80,7 +77,7 @@ systemctl restart nginx
 
 # Редактирование конфигурационного файла resolv
 echo "Редактируем resolv"
-nano /etc/resolv.conf << EOF
+cat <<EOF > /etc/resolv.conf
 nameserver 127.0.0.1
 EOF
 
