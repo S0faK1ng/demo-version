@@ -70,10 +70,6 @@ mdadm --detail -scan > /etc/mdadm.conf
 
 # Форматирование раздела
 fdisk /dev/md0 <<< "$(printf '%s\n' n p 1 2048 4186111 w)"
-n # Новая таблица разделов
-p # Основной раздел
-1 # Первый раздел
-w # Запись изменений
 
 # Создание файловой системы
 mkfs.ext4 /dev/md0p1
@@ -130,17 +126,8 @@ service mysqld start
 # Безопасная настройка MySQL
 mysql_secure_installation
 
-# Ответьте следующим образом:
-# Enter Y
-# Password: 123qweR%
-# Y Y Y Y Y
-
 # Вход в базу данных MySQL
-mysql -u root -p <<< "$(printf '%s\n' CREATE DATABASE moodledb;
-CREATE USER moodle IDENTIFIED BY ‘P@ssw0rd’;
-GRANT ALL PRIVILEGES ON moodledb.* TO moodle;
-FLUSH PRIVILEGES;
-exit)"
+mysql -u root -p
 
 # Скачивание и распаковка архива Moodle
 curl -L https://github.com/moodle/moodle/archive/refs/tags/v4.5.0.zip > /root/moodle.zip
