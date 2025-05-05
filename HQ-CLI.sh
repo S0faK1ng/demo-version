@@ -6,7 +6,7 @@ apt-get update || { echo 'Ошибка обновления!'; exit 1; }
 
 # Устанавливаем NFS client
 echo "Устанавливаем NFS-client..."
-apt-get install nfs-client || { echo 'Ошибка установки NFS-common!'; exit 1; }
+apt-get install nfs-clients || { echo 'Ошибка установки NFS-common!'; exit 1; }
 
 # Создаем точку монтирования
 echo "Создаем точку монтирования..."
@@ -93,3 +93,9 @@ systemctl enable --now sshd && systemctl restart sshd || { echo 'Ошибка з
 echo "Устанавливаем Яндекс Браузер..."
 apt-get update && apt-get install yandex-browser-stable || { echo 'Ошибка установки Яндекс-Браузера!'; exit 1; }
 
+# Настраиваем nameserver
+echo "Настраиваем nameserver"
+cat <<EOF | tee /etc/resolv.conf >&2
+search au-team.irpo
+nameserver 192.168.1.2
+EOF
