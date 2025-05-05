@@ -32,7 +32,7 @@ systemctl disable --now chronyd || { echo 'Ошибка отключения Chr
 
 # Устанавливаем Systemd Timesync
 echo "Устанавливаем Systemd Timesync..."
-apt-get update && apt-get install systemd-timesyncd || { echo 'Ошибка установки Systemd Timesync!'; exit 1; }
+apt-get update && apt-get install systemd-timesyncd -y || { echo 'Ошибка установки Systemd Timesync!'; exit 1; }
 
 # Настраиваем конфиг timesyncd
 echo "Настраиваем timesyncd..."
