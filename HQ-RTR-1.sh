@@ -120,7 +120,7 @@ EOF
 
 # Обновляем пакеты и устанавливаем dnsmasq
 apt-get update
-apt-get install dnsmasq
+apt-get install dnsmasq -y
 
 # Настраиваем dnsmasq
 cat <<EOF > /etc/dnsmasq.conf
