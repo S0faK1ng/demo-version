@@ -66,20 +66,20 @@ systemctl start iptables
 
 # Создаем администратора сети
 useradd net_admin -m
-passwd net_admin <<< "$(printf '%s\n' P@$$word P@$$word)"
+passwd net_admin
 
 # Даем права sudo новому пользователю
 echo 'net_admin ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
 
 # Удаляем старые сервисы синхронизации времени
-apt-get remove ntp
-apt-get remove chrony
+apt-get remove ntp -y
+apt-get remove chrony -y
 
 # Обновляем список пакетов
 apt-get update
 
 # Устанавливаем новый сервис синхронизации времени
-apt-get install systemd-timesyncd
+apt-get install systemd-timesyncd -y
 
 # Конфигурируем timesyncd
 cat <<EOF > /etc/systemd/timesyncd.conf
@@ -92,7 +92,6 @@ systemctl enable --now systemd-timesyncd
 
 # Обновляем репозитории и устанавливаем OpenSSH сервер
 apt-get update
-apt-get install openssh-server
 
 # Настраиваем SSH-сервер
 cat <<EOF > /etc/openssh/sshd_config
