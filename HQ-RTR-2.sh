@@ -34,7 +34,7 @@ apt-get update && apt-get install nginx -y
 
 # Конфигурация прокси-серверов для доменов
 echo "Создаем конфиг Nginx для виртуальных хостов..."
-cat <<EOF > /etc/nginx/sites-available/proxy
+cat <<EOF > /etc/nginx/sites-available.d/proxy
 server {
     listen 80;
     server_name moodle.au-team.irpo;
@@ -60,16 +60,16 @@ EOF
 
 # Удаляем дефолтные файлы конфигурации Nginx
 echo "Удаляем стандартные конфиги..."
-rm -f /etc/nginx/sites-available/default
-rm -f /etc/nginx/sites-enabled/default
+rm -f /etc/nginx/sites-available.d/default
+rm -f /etc/nginx/sites-enabled.d/default
 
 # Создаем символические ссылки для нового сайта
 echo "Активируем новый сайт..."
-ln -sf /etc/nginx/sites-available/proxy /etc/nginx/sites-enabled/
+ln -sf /etc/nginx/sites-available.d/proxy /etc/nginx/sites-enabled.d/
 
 # Проверка файлов конфигурации
 echo "Проверяем активированные сайты..."
-ls -la /etc/nginx/sites-enabled
+ls -la /etc/nginx/sites-enabled.d
 
 # Перезапуск Nginx
 echo "Перезапускаем Nginx..."
