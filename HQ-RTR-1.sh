@@ -134,7 +134,7 @@ EOF
 
 # Перезапускаем dnsmasq
 systemctl restart dnsmasq
-#systemctl status dnsmasq
+systemctl enable --now dnsmasq
 
 # Создаем пользователя net_admin
 useradd net_admin -m
