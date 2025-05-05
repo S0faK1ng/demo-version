@@ -11,7 +11,7 @@
 # https://www.mediawiki.org/wiki/Manual:Configuration_settings
 
 # Protect against web entry
-if ( !defined( 'MediaWiki' ) ) {
+if ( !defined( 'mediawiki' ) ) {
 	exit;
 }
 
