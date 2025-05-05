@@ -79,7 +79,7 @@ echo "Настраиваем SSH-сервер..."
 cat <<EOF | tee /etc/openssh/sshd_config >&2
 Port 22
 MaxAuthTries 2
-AllowUsers net_admin
+AllowUsers sshuser
 PermitRootLogin no
 Banner /root/banner
 EOF
