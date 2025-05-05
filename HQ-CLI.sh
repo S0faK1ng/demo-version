@@ -8,6 +8,9 @@ apt-get update || { echo 'Ошибка обновления!'; exit 1; }
 echo "Устанавливаем NFS-client..."
 apt-get install nfs-clients -y || { echo 'Ошибка установки NFS-common!'; exit 1; }
 
+# Устанавливаем python3
+echo "Устанавливаем python3"
+apt-get install python3 -y || { echo 'Ошибка установки python3!'; exit 1; }
 # Создаем точку монтирования
 echo "Создаем точку монтирования..."
 mkdir -p /mnt/nfs || { echo 'Ошибка создания директории!'; exit 1; }
