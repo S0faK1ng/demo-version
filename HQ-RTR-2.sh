@@ -1,5 +1,13 @@
 #!/bin/bash
 
+
+
+# Редактирование конфигурационного файла resolv
+echo "Редактируем resolv"
+nano /etc/resolv.conf << EOF
+nameserver 8.8.8.8
+EOF
+
 # Настройка NAT перенаправления порта TCP 2024 на внутренний сервер
 echo "Настраиваем NAT..."
 iptables -t nat -A PREROUTING -p tcp -d 192.168.1.1 --dport 2024 -j DNAT --to-destination 192.168.1.10:2024
@@ -69,5 +77,11 @@ ls -la /etc/nginx/sites-enabled
 # Перезапуск Nginx
 echo "Перезапускаем Nginx..."
 systemctl restart nginx
+
+# Редактирование конфигурационного файла resolv
+echo "Редактируем resolv"
+nano /etc/resolv.conf << EOF
+nameserver 127.0.0.1
+EOF
 
 echo "Настройки выполнены успешно!"
