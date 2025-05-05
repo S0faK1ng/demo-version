@@ -10,7 +10,7 @@ useradd sshuser -u 1010
 id sshuser
 
 # Устанавливаем пароль для пользователя sshuser
-echo 'P@ssw0rd' | passwd --stdin sshuser
+passwd sshuser
 
 # Редактируем файл sudoers, разрешая пользователям группы WHEEL выполнять команды без пароля
 echo '%WHEEL_USERS ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
