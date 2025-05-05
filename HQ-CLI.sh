@@ -91,7 +91,7 @@ systemctl enable --now sshd && systemctl restart sshd || { echo 'Ошибка з
 
 # Устанавливаем браузер Яндекс
 echo "Устанавливаем Яндекс Браузер..."
-apt-get update && apt-get install yandex-browser-stable || { echo 'Ошибка установки Яндекс-Браузера!'; exit 1; }
+apt-get update && apt-get install yandex-browser-stable -y || { echo 'Ошибка установки Яндекс-Браузера!'; exit 1; }
 
 # Настраиваем nameserver
 echo "Настраиваем nameserver"
