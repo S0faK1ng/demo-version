@@ -32,7 +32,7 @@ systemctl restart dnsmasq
 # Создание пользователя для SSH
 useradd sshuser -u 1010
 id sshuser
-passwd sshuser <<< "$(printf '%s\n' P@ssw0rd P@ssw0rd)"
+passwd sshuser
 
 # Предоставление прав sudo пользователю
 echo 'WHEEL_USERS ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
