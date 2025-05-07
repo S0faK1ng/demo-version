@@ -107,33 +107,11 @@ docker volume ls
 # Запускаем контейнеры
 docker compose -f /root/wiki.yml up -d
 
-cat <<EOF > /root/wiki.yml
-services:
-  MediaWiki:
-    image: mediawiki
-    container_name: wiki
-    restart: always
-    ports:
-      - 8080:80
-    links:
-      - database
-    volumes:  
-      - images:/var/www/html/images
-      - ./LocalSettings.php:/var/www/html/LocalSettings.php
-  database:
-    image: mariadb
-    container_name: mariadb
-    environment:
-      MYSQL_ROOT_PASSWORD: 123qweR%
-      MYSQL_DATABASE: mediawiki
-      MYSQL_USER: wiki
-      MYSQL_PASSWORD: WikiP@ssw0rd
-    volumes: 
-      - dbvolume:/var/lib/mysql
-volumes:
-  dbvolume:
-      external: true
-  images:
-EOF
 
-docker compose -f /root/wiki.yml up -d
+
+
+# после настройки на hq-cli раскоментировать строчку 
+      #- ./LocalSettings.php:/var/www/html/LocalSettings.php (nano wiki.yml)
+
+
+#docker compose -f /root/wiki.yml up -d
