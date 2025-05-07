@@ -75,5 +75,21 @@ systemctl restart sshd.service
 # Переименовываем машину
 hostnamectl set-hostname isp.au-team.irpo
 
+# установка хрони
+apt-get install chony -y
+
+#настройка хрони
+cat <<EOF > /etc/chrony.conf
+pool 172.16.4.2 iburst
+driftfile /var/lib/chrony/drift
+makestep
+rtcsync
+ntsdumpdir /var/lib/chrony
+logdir /var/log/chrony
+
+#запуск хрони
+systemctl enable --now chronyd
+systemctl restart chronyd
+
 # Перезагружаем машину
 reboot
