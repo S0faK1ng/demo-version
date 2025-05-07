@@ -75,23 +75,22 @@ passwd net_admin
 echo 'net_admin ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
 
 # Удаляем старые сервисы синхронизации времени
-apt-get remove ntp -y
-apt-get remove chrony -y
+#apt-get remove ntp -y
 
 # Обновляем список пакетов
 apt-get update
 
 # Устанавливаем новый сервис синхронизации времени
-apt-get install systemd-timesyncd -y
+#apt-get install systemd-timesyncd -y
 
 # Конфигурируем timesyncd
-cat <<EOF > /etc/systemd/timesyncd.conf
-[Time]
-NTP=172.16.4.2
-EOF
+#cat <<EOF > /etc/systemd/timesyncd.conf
+#[Time]
+#NTP=172.16.4.2
+#EOF
 
 # Запускаем и включаем timesyncd
-systemctl enable --now systemd-timesyncd
+#systemctl enable --now systemd-timesyncd
 
 # Обновляем репозитории и устанавливаем OpenSSH сервер
 apt-get update
@@ -111,7 +110,7 @@ Authorized access only
 EOF
 
 # установка хрони
-apt-get install chony -y
+apt-get install chrony -y
 
 #настройка хрони
 cat <<EOF > /etc/chrony.conf
