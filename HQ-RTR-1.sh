@@ -1,5 +1,8 @@
 #!/bin/bash
 
+wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/HQ-RTR-2.sh
+chmod +x HQ-RTR-2.sh
+
 # Создаем директории для интерфейсов
 mkdir -p /etc/net/ifaces/ens19
 mkdir -p /etc/net/ifaces/ens19.100
