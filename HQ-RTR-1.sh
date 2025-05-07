@@ -152,6 +152,7 @@ allow 192.168.1.0/26
 allow 192.168.2.0/28
 allow 172.16.5.0/28
 allow 192.168.4.0/27
+allow 0/0
 EOF
 
 systemctl enable --now chrony
