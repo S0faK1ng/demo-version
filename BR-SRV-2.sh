@@ -140,8 +140,4 @@ docker compose -f /root/wiki.yml up -d
 
 
 
-# после настройки на hq-cli раскоментировать строчку 
-      #- ./LocalSettings.php:/var/www/html/LocalSettings.php (nano wiki.yml)
 
-
-#docker compose -f /root/wiki.yml up -d
