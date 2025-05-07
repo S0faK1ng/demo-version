@@ -107,6 +107,9 @@ cat <<EOF > /root/banner
 Authorized access only
 EOF
 
+# Переименовать машину
+hostnamectl set-hostname br-rtr.au-team.irpo
+
 # Активируем и перезапускаем SSH-сервис
 systemctl enable --now sshd
 systemctl restart sshd
