@@ -1,5 +1,8 @@
 #!/bin/bash
 
+wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/BR-RTR-2.sh
+chmod +x BR-RTR-2.sh
+
 # Создаем необходимые директории для сетевых интерфейсов
 mkdir /etc/net/ifaces/ens19
 mkdir /etc/net/ifaces/iptunnel
