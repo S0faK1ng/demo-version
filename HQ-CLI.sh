@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Баннер авторизации
+hostnamectl set-hostname hq-cli.au-team.irpo
+
 # Обновляем список пакетов
 echo "Обновляем систему..."
 apt-get update || { echo 'Ошибка обновления!'; exit 1; }
