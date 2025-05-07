@@ -131,7 +131,7 @@ no-resolv
 domain=au-team.irpo
 dhcp-range=192.168.2.2,192.168.2.15,999h
 dhcp-option=3,192.168.2.1
-dhcp-option=6,192.168.1.2
+dhcp-option=6,192.168.1.10
 interface=ens19.200
 EOF
 
