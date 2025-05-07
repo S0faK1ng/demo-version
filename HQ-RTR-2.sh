@@ -11,10 +11,6 @@ echo "Настраиваем NAT..."
 iptables -t nat -A PREROUTING -p tcp -d 192.168.1.1 --dport 2024 -j DNAT --to-destination 192.168.1.10:2024
 iptables-save > /etc/sysconfig/iptables
 
-# Очистка правил NAT
-echo "Очищаем правила NAT..."
-iptables -F -t nat
-
 # Перезагрузка rc.local скрипта
 echo "Перезагружаем rc.local..."
 bash /etc/rc.local
