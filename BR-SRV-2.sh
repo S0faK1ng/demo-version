@@ -53,6 +53,7 @@ makestep
 rtcsync
 ntsdumpdir /var/lib/chrony
 logdir /var/log/chrony
+EOF
 
 #запуск хрони
 systemctl enable --now chronyd
