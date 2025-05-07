@@ -1,5 +1,8 @@
 #!/bin/bash
 
+wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/BR-SRV-2.sh
+chmod +x BR-SRV-2.sh
+
 #обновляем пакеты
 apt-get update
 
