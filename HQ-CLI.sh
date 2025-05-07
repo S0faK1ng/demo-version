@@ -15,9 +15,7 @@ apt-get install nfs-clients -y || { echo 'Ошибка установки NFS-co
 echo "Устанавливаем python3"
 apt-get install python3 -y || { echo 'Ошибка установки python3!'; exit 1; }
 
-# Удаляем Python2.7
-echo "Удаляем Python2.7"
-rm /usr/bin/python2.7 -y
+
 
 # Создаем точку монтирования
 echo "Создаем точку монтирования..."
@@ -108,5 +106,9 @@ apt-get update && apt-get install yandex-browser-stable -y || { echo 'Ошибк
 echo "Настраиваем nameserver"
 cat <<EOF | tee /etc/resolv.conf >&2
 search au-team.irpo
+
+# Удаляем Python2.7
+echo "Удаляем Python2.7"
+rm /usr/bin/python2.7 -yes
 nameserver 192.168.1.2
 EOF
