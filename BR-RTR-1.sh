@@ -107,6 +107,22 @@ cat <<EOF > /root/banner
 Authorized access only
 EOF
 
+# установка хрони
+apt-get install chony -y
+
+#настройка хрони
+cat <<EOF > /etc/chrony.conf
+pool 172.16.4.2 iburst
+driftfile /var/lib/chrony/drift
+makestep
+rtcsync
+ntsdumpdir /var/lib/chrony
+logdir /var/log/chrony
+
+#запуск хрони
+systemctl enable --now chronyd
+systemctl restart chronyd
+
 # Переименовать машину
 hostnamectl set-hostname br-rtr.au-team.irpo
 
