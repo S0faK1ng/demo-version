@@ -42,6 +42,22 @@ EOF
 systemctl enable --now systemd-timesyncd
 timedatectl timesync-status
 
+# установка хрони
+apt-get install chony -y
+
+#настройка хрони
+cat <<EOF > /etc/chrony.conf
+pool 172.16.4.2 iburst
+driftfile /var/lib/chrony/drift
+makestep
+rtcsync
+ntsdumpdir /var/lib/chrony
+logdir /var/log/chrony
+
+#запуск хрони
+systemctl enable --now chronyd
+systemctl restart chronyd
+
 # Установка Ansible для автоматизации администрирования узлов сети
 apt-get install ansible -y
 
