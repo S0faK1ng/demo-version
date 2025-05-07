@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Переименовали
-hostnamectl set-hostname br-srv.au-team.irpo
+hostnamectl set-hostname hq-srv.au-team.irpo
 
 # Обновление списка пакетов
 apt-get update
