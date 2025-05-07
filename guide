@@ -32,6 +32,32 @@ chmod +x HQ-RTR-1.sh
 P@$$word
 P@$$word
 
+После перезапуска
+
+vtysh
+conf t
+router ospf
+passive-interface default 
+network 192.168.1.0/26 area 0
+network 192.168.2.0/28 area 0
+network 192.168.99.0/29 area 0
+network 10.0.0.0/28 area 0
+ex
+int iptunnel
+no ip ospf network broadcast
+no ip ospf passive
+ex
+do wr mem
+
+router ospf6
+ospf6 router-id 172.16.4.2
+ex
+int iptunnel
+ipv6 ospf6 area 0
+int ens18
+ipv6 ospf6 area 0
+ex
+do wr mem
 
 ----BR-RTR-1-------
 
@@ -57,6 +83,29 @@ chmod +x BR-RTR-1.sh
 
 P@$$word
 P@$$word
+
+vtysh
+conf t
+router ospf
+passive-interface default 
+network 192.168.4.0/28 area 0
+network 10.0.0.0/28 area 0
+ex
+int iptunnel
+no ip ospf network broadcast
+no ip ospf passive
+ex
+do wr mem
+
+router ospf6
+ospf6 router-id 172.16.5.2
+ex
+int iptunnel
+ipv6 ospf6 area 0
+int ens18
+ipv6 ospf6 area 0
+ex
+do wr mem
 
 
 
