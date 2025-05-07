@@ -31,6 +31,8 @@ chmod +x HQ-RTR-1.sh
 chmod +x HQ-RTR-2.sh
 ./HQ-RTR-1.sh
 
+P@$$word
+P@$$word
 
 
 ----BR-RTR-1-------
@@ -57,7 +59,8 @@ chmod +x BR-RTR-1.sh
 chmod +x BR-RTR-2.sh
 ./BR-RTR-1.sh
 
-
+P@$$word
+P@$$word
 
 
 
@@ -82,6 +85,9 @@ wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/HQ-
 chmod +x HQ-SRV.sh
 ./HQ-SRV.sh
 
+P@ssw0rd
+P@ssw0rd
+
 Enter Y Y 123qweR% Y Y Y Y Y
 
 123qweR%
@@ -99,13 +105,12 @@ nano /etc/resolv.conf
 
 nameserver 8.8.8.8
 
-
-apt-get install wget
 wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/HQ-CLI.sh
 chmod +x HQ-CLI.sh
 ./HQ-CLI.sh
 
-
+P@ssw0rd
+P@ssw0rd
 
 
 
@@ -129,13 +134,67 @@ service network restart
 apt-get install wget
 wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/BR-SRV-1.sh
 wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/BR-SRV-2.sh
-wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/LocalSettings.php
+(не писать - wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/LocalSettings.php)
 chmod +x BR-SRV-1.sh
 chmod +x BR-SRV-2.sh
 ./BR-SRV-1.sh
+
+P@ssw0rd
+P@ssw0rd
+
+AU-TEAM.IRPO
+AU-TEAM
+dc
+SAMBA_INTERNAL
+192.168.1.10
+123qweR%
+123qweR%
+
+systemctl restart network
+systemctl restart samba
+
 ./BR-SRV-2.sh
+
+Enter
+Enter
+
+yes
+P@$$word
+yes
+P@ssw0rd
+yes
+P@ssw0rd
+yes
+P@$$word
+
+nano /etc/openssh/sshd_config
+Permitrootlogin yes
+
+service sshd restart
+
+на HQ-CLI 192.168.4.10:8080 заполняем по файлу из BR-SRV (nano wiki.yml)
+
+Скачиваем LocalSettings.php
+перекидываем в папку без кирилицы
+например /home/user/
+
+на HQ-CLI
+scp -P 2024 /home/user/localsettings.php sshuser@192.168.4.2:/root/
+
+
+nano /etc/openssh/sshd_config
+Permitrootlogin no
+
+service sshd restart
+
+
+------HQ-RTR-2------
+./HQ-RTR-2.sh
+
+
+
+
 
 ----BR-RTR-2-----
 
 ./BR-RTR-2.sh
-
