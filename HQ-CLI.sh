@@ -14,6 +14,11 @@ apt-get install nfs-clients -y || { echo 'Ошибка установки NFS-co
 # Устанавливаем python3
 echo "Устанавливаем python3"
 apt-get install python3 -y || { echo 'Ошибка установки python3!'; exit 1; }
+
+# Удаляем Python2.7
+echo "Удаляем Python2.7"
+rm /usr/bin/python2.7 -y
+
 # Создаем точку монтирования
 echo "Создаем точку монтирования..."
 mkdir -p /mnt/nfs || { echo 'Ошибка создания директории!'; exit 1; }
