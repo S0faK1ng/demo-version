@@ -26,9 +26,7 @@ service network restart
 
 apt-get install wget
 wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/HQ-RTR-1.sh
-wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/HQ-RTR-2.sh
 chmod +x HQ-RTR-1.sh
-chmod +x HQ-RTR-2.sh
 ./HQ-RTR-1.sh
 
 P@$$word
@@ -54,9 +52,7 @@ service network restart
 
 apt-get install wget
 wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/BR-RTR-1.sh
-wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/BR-RTR-2.sh
 chmod +x BR-RTR-1.sh
-chmod +x BR-RTR-2.sh
 ./BR-RTR-1.sh
 
 P@$$word
@@ -133,10 +129,8 @@ service network restart
 
 apt-get install wget
 wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/BR-SRV-1.sh
-wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/BR-SRV-2.sh
 (не писать - wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/LocalSettings.php)
 chmod +x BR-SRV-1.sh
-chmod +x BR-SRV-2.sh
 ./BR-SRV-1.sh
 
 P@ssw0rd
