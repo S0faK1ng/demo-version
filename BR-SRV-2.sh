@@ -12,6 +12,20 @@ samba-tool user create user5.hq 123qweR%
 samba-tool group add hq
 samba-tool group addmembers hq user1.hq,user2.hq,user3.hq,user4.hq,user5.hq
 
+# распаковка юзеров
+unzip Users.zip
+
+# запуск скрипта 
+csv_file="/root/Users.csv"
+while IFS=";" read -r firstName lastName role phone ou street zip city country password; do
+	if [ "$firstName" == "First Name" ]; then
+		continue
+	fi
+	username="${firstName,,}.${lastName,,}"
+	samba-tool user add "$username" P@ssw0rd;
+done < "$csv_file"
+
+
 # Обновляем систему
 apt-get update
 
