@@ -30,20 +30,20 @@ done < "$csv_file"
 apt-get update
 
 # Устанавливаем утилиту синхронизации времени Systemd Timesyncd
-apt-get install systemd-timesyncd -y
+#apt-get install systemd-timesyncd -y
 
 # Настройка синхронизации времени с внутренним источником
-cat <<EOF > /etc/systemd/timesyncd.conf
-[Time]
-NTP=172.16.4.2
-EOF
+#cat <<EOF > /etc/systemd/timesyncd.conf
+#[Time]
+#NTP=172.16.4.2
+#EOF
 
 # Активируем и запускаем службу TimeSync
-systemctl enable --now systemd-timesyncd
-timedatectl timesync-status
+#systemctl enable --now systemd-timesyncd
+#timedatectl timesync-status
 
 # установка хрони
-apt-get install chony -y
+apt-get install chrony -y
 
 #настройка хрони
 cat <<EOF > /etc/chrony.conf
@@ -67,7 +67,6 @@ mkdir -p /etc/ansible
 
 # Подготовка инвентаря Ansible
 cat <<EOF > /etc/ansible/hosts
-[hq]
 hq-srv ansible_host=sshuser@192.168.1.10 ansible_port=2024
 hq-cli ansible_host=sshuser@192.168.2.6 ansible_port=22
 hq-rtr ansible_host=net_admin@192.168.1.1 ansible_port=22
