@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Переименовали
+hostnamectl set-hostname br-srv.au-team.irpo
+
 # Обновление списка пакетов
 apt-get update
 
@@ -21,7 +24,7 @@ address=/br-rtr.au-team.irpo/192.168.4.1
 address=/hq-srv.au-team.irpo/192.168.1.10
 ptr-record=10.1.168.192.in-addr.arpa,hq-srv.au-team.irpo
 address=/hq-cli.au-team.irpo/192.168.2.10
-ptr-record=5.2.168.192.in-addr.arpa,hq-cli.au-team.irpo
+ptr-record=6.2.168.192.in-addr.arpa,hq-cli.au-team.irpo
 address=/br-srv.au-team.irpo/192.168.4.10
 EOF
 
