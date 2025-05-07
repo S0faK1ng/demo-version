@@ -116,6 +116,22 @@ EOF
 systemctl enable --now systemd-timesyncd
 timedatectl timesync-status
 
+# установка хрони
+apt-get install chony -y
+
+#настройка хрони
+cat <<EOF > /etc/chrony.conf
+pool 172.16.4.2 iburst
+driftfile /var/lib/chrony/drift
+makestep
+rtcsync
+ntsdumpdir /var/lib/chrony
+logdir /var/log/chrony
+
+#запуск хрони
+systemctl enable --now chronyd
+systemctl restart chronyd
+
 # Установка веб-сервера Apache, PHP и MySQL
 apt-get install apache2 php8.2 apache2-mod_php8.2 mariadb-server \
 php8.2-opcache php8.2-curl php8.2-gd php8.2-intl php8.2-mysqli \
