@@ -114,5 +114,4 @@ hostnamectl set-hostname br-rtr.au-team.irpo
 systemctl enable --now sshd
 systemctl restart sshd
 
-# Меняем имя хоста машины
-hostnamectl set-hostname br-rtr.au-team.irpo
+
