@@ -104,20 +104,20 @@ systemctl enable --now nfs
 systemctl restart nfs
 
 # Установка служб времени
-apt-get install systemd-timesyncd -y
+#apt-get install systemd-timesyncd -y
 
 # Настройка службы времени
-cat <<EOF > /etc/systemd/timesyncd.conf
-[Time]
-NTP=192.168.1.1
-EOF
+#cat <<EOF > /etc/systemd/timesyncd.conf
+#[Time]
+#NTP=192.168.1.1
+#EOF
 
 # Активация службы времени
 systemctl enable --now systemd-timesyncd
 timedatectl timesync-status
 
 # установка хрони
-apt-get install chony -y
+apt-get install chrony -y
 
 #настройка хрони
 cat <<EOF > /etc/chrony.conf
