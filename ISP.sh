@@ -76,7 +76,7 @@ systemctl restart sshd.service
 hostnamectl set-hostname isp.au-team.irpo
 
 # установка хрони
-apt-get install chony -y
+apt-get install chrony -y
 
 #настройка хрони
 cat <<EOF > /etc/chrony.conf
