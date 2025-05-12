@@ -21,7 +21,7 @@ EOF
 
 # IP адрес ethernet-интерфейса ens19
 cat <<EOF > /etc/net/ifaces/ens19/ipv4address
-192.168.4.1/28
+192.168.3.1/27
 EOF
 
 # Настройки GRE-туннеля
