@@ -90,7 +90,7 @@ TUNOPTIONS='ttl 64'
 EOF
 
 cat <<EOF > /etc/net/ifaces/iptunnel/ipv4route
-192.168.4.0/24 via 10.0.0.2
+192.168.3.0/27 via 10.0.0.2
 EOF
 
 # Включаем форвардинг пакетов
@@ -154,7 +154,7 @@ local stratum 5
 allow 192.168.1.0/26
 allow 192.168.2.0/28
 allow 172.16.5.0/28
-allow 192.168.4.0/27
+allow 192.168.3.0/27
 allow 0/0
 EOF
 
