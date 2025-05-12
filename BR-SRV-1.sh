@@ -62,7 +62,7 @@ hostnamectl set-hostname br-srv.au-team.irpo
 
 # Обновляем hosts-файл
 cat <<EOF > /etc/hosts
-192.168.4.10	br-srv.au-team.irpo
+192.168.3.10	br-srv.au-team.irpo
 EOF
 
 # Создаем новую доменную структуру с использованием samba-tool
