@@ -99,6 +99,41 @@ echo "редактируем ipsec.secrets"
 сat <<EOF > /etc/strongswan/ipsec.secrets
 	10.0.0.1 10.0.0.2  : PSK "P@ssw0rd"
 EOF
+
+iptables -F
+iptables -t nat -F
+iptables -t mangle -F
+iptables -X
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+iptables -A INPUT -i "ens19.100" -s "192.168.1.0/26" -j ACCEPT
+iptables -A INPUT -i "ens19.200" -s "192.168.2.0/28" -j ACCEPT
+iptables -A INPUT -i "ens19.999" -s "192.168.99.0/29" -j ACCEPT
+iptables -A INPUT -p icmp -j ACCEPT
+iptables -A FORWARD -p icmp -j ACCEPT
+iptables -A FORWARD -i "ens18" -o "ens19.100" -p tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -i "ens18" -o "ens19.200" -p tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -i "ens18" -o "ens19.999" -p tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -i "ens18" -o "ens19.100" -p tcp --dport 443 -j ACCEPT
+iptables -A FORWARD -i "ens18" -o "ens19.200" -p tcp --dport 443 -j ACCEPT
+iptables -A FORWARD -i "ens18" -o "ens19.999" -p tcp --dport 443 -j ACCEPT
+iptables -A FORWARD -i "ens18" -o "ens19.100" -p tcp --dport 22 -j ACCEPT
+iptables -A FORWARD -i "ens18" -o "ens19.200" -p tcp --dport 22 -j ACCEPT
+iptables -A FORWARD -i "ens18" -o "ens19.999" -p tcp --dport 22 -j ACCEPT
+iptables -A FORWARD -i "ens18" -o "ens19.100" -p udp --dport 53 -j ACCEPT
+iptables -A FORWARD -i "ens18" -o "ens19.200" -p udp --dport 53 -j ACCEPT
+iptables -A FORWARD -i "ens18" -o "ens19.999" -p udp --dport 53 -j ACCEPT
+iptables -A FORWARD -i "ens18" -o "ens19.100" -p tcp --dport 53 -j ACCEPT
+iptables -A FORWARD -i "ens18" -o "ens19.200" -p tcp --dport 53 -j ACCEPT
+iptables -A FORWARD -i "ens18" -o "ens19.999" -p tcp --dport 53 -j ACCEPT
+iptables -A FORWARD -i "ens18" -o "ens19.100" -p udp --dport 123 -j ACCEPT
+iptables -A FORWARD -i "ens18" -o "ens19.200" -p udp --dport 123 -j ACCEPT
+iptables -A FORWARD -i "ens18" -o "ens19.999" -p udp --dport 123 -j ACCEPT
+
  
 # Редактирование конфигурационного файла resolv
 echo "Редактируем resolv"
