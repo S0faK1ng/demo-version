@@ -46,7 +46,7 @@ server {
     listen 80;
     server_name wiki.au-team.irpo;
     location / {
-        proxy_pass http://192.168.4.10:8080;
+        proxy_pass http://192.168.3.10:8080;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$remote_addr;
