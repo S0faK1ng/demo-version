@@ -70,7 +70,7 @@ cat <<EOF > /etc/ansible/hosts
 hq-srv ansible_host=sshuser@192.168.1.10 ansible_port=2024
 hq-cli ansible_host=sshuser@192.168.2.6 ansible_port=22
 hq-rtr ansible_host=net_admin@192.168.1.1 ansible_port=22
-br-rtr ansible_host=net_admin@192.168.4.1 ansible_port=22
+br-rtr ansible_host=net_admin@192.168.3.1 ansible_port=22
 EOF
 
 # Настройки Python-интерпретатора для Ansible
@@ -83,7 +83,7 @@ EOF
 ssh-keygen -t rsa <<< "$(printf '%s\n' /root/.ssh/id_rsa)"
 
 # Копирование публичного ключа на другие узлы
-ssh-copy-id -p 22 net_admin@192.168.4.1
+ssh-copy-id -p 22 net_admin@192.168.3.1
 ssh-copy-id -p 22 sshuser@192.168.2.6
 ssh-copy-id -p 2024 sshuser@192.168.1.10
 ssh-copy-id -p 22 net_admin@192.168.1.1
