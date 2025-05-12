@@ -215,6 +215,10 @@ Permitrootlogin yes
 
 service sshd restart
 
+
+-------------(Если дальше будет не понятно смотрите гайд от абакана 
+пункт с mediawiki)-----------
+
 на HQ-CLI 192.168.4.10:8080 заполняем по файлу из BR-SRV (nano wiki.yml)
 
 Скачиваем LocalSettings.php
