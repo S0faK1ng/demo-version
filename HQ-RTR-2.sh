@@ -71,6 +71,35 @@ ls -la /etc/nginx/sites-enabled.d
 echo "Перезапускаем Nginx..."
 systemctl restart nginx
 
+#устанавливаем ipsec
+apt-get update && apt-get install -y strongswan
+
+#редактируем ipsec
+echo "редактируем ipsec.conf"
+сat <<EOF > /etc/strongswan/ipsec.conf
+
+config setup
+
+conn gre
+	auto=start
+	type=tunnel
+	authby=secret
+	left=10.0.0.1
+	right=10.0.0.2
+	leftsubnet=0.0.0.0/0
+	rightsubnet=0.0.0.0/0
+	leftprotoport=gre
+	rightprotoport=gre
+	ike=aes256-sha2_256-modp1024!
+	esp=aes256-sha2_256!
+EOF
+
+#редактируем ipsec.secrets
+echo "редактируем ipsec.secrets"
+сat <<EOF > /etc/strongswan/ipsec.secrets
+	10.0.0.1 10.0.0.2  : PSK "P@ssw0rd"
+EOF
+ 
 # Редактирование конфигурационного файла resolv
 echo "Редактируем resolv"
 cat <<EOF > /etc/resolv.conf
