@@ -104,35 +104,34 @@ iptables -F
 iptables -t nat -F
 iptables -t mangle -F
 iptables -X
-iptables -P INPUT DROP
+iptables -P INPUT   DROP
 iptables -P FORWARD DROP
-iptables -P OUTPUT ACCEPT
-iptables -A INPUT -i lo -j ACCEPT
-iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+iptables -P OUTPUT  ACCEPT
+iptables -A INPUT  -i lo -j ACCEPT
+iptables -A INPUT  -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-iptables -A INPUT -i "ens19.100" -s "192.168.1.0/26" -j ACCEPT
-iptables -A INPUT -i "ens19.200" -s "192.168.2.0/28" -j ACCEPT
-iptables -A INPUT -i "ens19.999" -s "192.168.99.0/29" -j ACCEPT
-iptables -A INPUT -p icmp -j ACCEPT
+iptables -A INPUT -i "ens19" -s "192.168.1.0/26" -j ACCEPT
+iptables -A INPUT -i "ens19" -s "192.168.2.0/28" -j ACCEPT
+iptables -A INPUT -i "ens19" -s "192.168.99.0/29" -j ACCEPT
+iptables -A INPUT   -p icmp -j ACCEPT
 iptables -A FORWARD -p icmp -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19.100" -p tcp --dport 80 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19.200" -p tcp --dport 80 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19.999" -p tcp --dport 80 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19.100" -p tcp --dport 443 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19.200" -p tcp --dport 443 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19.999" -p tcp --dport 443 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19.100" -p tcp --dport 22 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19.200" -p tcp --dport 22 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19.999" -p tcp --dport 22 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19.100" -p udp --dport 53 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19.200" -p udp --dport 53 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19.999" -p udp --dport 53 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19.100" -p tcp --dport 53 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19.200" -p tcp --dport 53 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19.999" -p tcp --dport 53 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19.100" -p udp --dport 123 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19.200" -p udp --dport 123 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19.999" -p udp --dport 123 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 443 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 22 -j ACCEPT
+iptables -A FORWARD -p udp --dport 53 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 53 -j ACCEPT
+iptables -A FORWARD -p udp --dport 123 -j ACCEPT
+iptables -A INPUT -p udp --dport 67:68 --sport \ 67:68 -j ACCEPT
+iptables -A INPUT -p udp -m udp --dport 631 -j ACCEPT
+iptables -A INPUT -p tcp -m tcp --dport 631 -j ACCEPT
+iptables -A FORWARD -p udp -m udp --dport 631 -j ACCEPT
+iptables -A FORWARD -p tcp -m tcp --dport 631 -j ACCEPT
+iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 514 -j ACCEPT
+iptables -A FORWARD -m state --state NEW -m tcp -p tcp --dport 514 -j ACCEPT
+iptables -A INPUT -m state --state NEW -m udp -p udp --dport 514 -j ACCEPT
+iptables -A FORWARD -m state --state NEW -m udp -p udp --dport 514 -j ACCEPT
+iptables -t nat -A POSTROUTING -o "ens18" -j MASQUERADE
+iptables-save > /etc/sysconfig/iptables
 
  
 # Редактирование конфигурационного файла resolv
