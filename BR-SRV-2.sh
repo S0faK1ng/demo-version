@@ -42,6 +42,11 @@ apt-get update
 #systemctl enable --now systemd-timesyncd
 #timedatectl timesync-status
 
+apt-get install -y rsyslog-classic
+echo "*.* @@192.168.1.10:514" > /etc/rsyslog.d/all_log.conf
+systemctl enable --now rsyslog
+systemctl restart rsyslog
+
 # установка хрони
 apt-get install chrony -y
 
