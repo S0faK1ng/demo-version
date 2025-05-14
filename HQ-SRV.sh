@@ -75,10 +75,10 @@ mdadm --detail -scan > /etc/mdadm.conf
 fdisk /dev/md0 <<< "$(printf '%s\n' n p 1 2048 4186111 w)"
 
 # Создание файловой системы
-mkfs.ext4 /dev/md0p1
+mkfs.ext4 /dev/md0
 
 # Монтируем созданный раздел
-echo '/dev/md0p1 /raid5 ext4 defaults 0 0' > /etc/fstab
+echo '/dev/md0 /raid5 ext4 defaults 0 0' > /etc/fstab
 mkdir /raid5
 mount -a
 
