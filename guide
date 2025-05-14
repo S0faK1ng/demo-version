@@ -29,8 +29,8 @@ wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/HQ-
 chmod +x HQ-RTR-1.sh
 ./HQ-RTR-1.sh
 
-P@$$word
-P@$$word
+P@ssw0rd
+P@ssw0rd
 
 После перезапуска
 
@@ -81,8 +81,8 @@ wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/BR-
 chmod +x BR-RTR-1.sh
 ./BR-RTR-1.sh
 
-P@$$word
-P@$$word
+P@ssw0rd
+P@ssw0rd
 
 vtysh
 conf t
@@ -202,13 +202,13 @@ Enter
 Enter
 
 yes
-P@$$word
-yes
 P@ssw0rd
 yes
 P@ssw0rd
 yes
-P@$$word
+P@ssw0rd
+yes
+P@ssw0rd
 
 nano /etc/openssh/sshd_config
 Permitrootlogin yes
