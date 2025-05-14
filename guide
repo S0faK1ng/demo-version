@@ -88,7 +88,7 @@ vtysh
 conf t
 router ospf
 passive-interface default 
-network 192.168.4.0/28 area 0
+network 192.168.3.0/27 area 0
 network 10.0.0.0/28 area 0
 ex
 int iptunnel
@@ -167,11 +167,11 @@ nano /etc/net/ifaces/ens18/options
     TYPE=eth
 
 nano /etc/net/ifaces/ens18/ipv4address
-  192.168.4.10/28
+  192.168.3.10/27
 
 nano /etc/net/ifaces/ens18/ipv4route
 
-  default via 192.168.4.1
+  default via 192.168.3.1
 
 service network restart
 
@@ -219,14 +219,14 @@ service sshd restart
 -------------(Если дальше будет не понятно смотрите гайд от абакана 
 пункт с mediawiki)-----------
 
-на HQ-CLI 192.168.4.10:8080 заполняем по файлу из BR-SRV (nano wiki.yml)
+на HQ-CLI 192.168.3.10:8080 заполняем по файлу из BR-SRV (nano wiki.yml)
 
 Скачиваем LocalSettings.php
 перекидываем в папку без кирилицы
 например /home/user/
 
 на HQ-CLI
-scp -P 2024 /home/user/localsettings.php sshuser@192.168.4.2:/root/
+scp -P 2024 /home/user/localsettings.php sshuser@192.168.3.2:/root/
 
 
 nano /etc/openssh/sshd_config
