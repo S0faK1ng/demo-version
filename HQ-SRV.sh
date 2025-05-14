@@ -167,3 +167,39 @@ rm /var/www/html/index.html
 
 # Перезапуск Apache
 systemctl restart httpd2
+
+
+apt-get install -y rsyslog-classic
+
+
+cat <<EOF > /etc/rsyslog.d/00_common.conf
+module(load="imudp")
+input(type="imudp" port="514")
+
+module(load="imtcp")
+input(type="imtcp" port=514")
+
+module(load="builtin:omfile" Template="RSYSLOG_TraditionalFileFormat"
+       DirCreateMode="0755"
+       FileCreateMode="0640"
+       fileOwner="root"
+       fileGroup="adm")
+
+global(workDirectory="/var/spool/rsyslog")
+
+# start log rotation via outchannel
+# outchannel definition
+$outchannel log_rotation,/opt/%HOSTNAME%/log_rotation.log, 52428800,/home/me/./log_rotation_script
+#  activate the channel and log everything to it
+*.* :omfile:$log_rotation
+# end log rotation via outchannel
+
+$template RemoteLogs,"/opt/%HOSTNAME%/%PROGRAMNAME%.log"
+*.* ?RemoteLogs
+& ~
+EOF
+
+cat <<EOF > /opt/log_rotation_script.sh
+mv -f /opt/%HOSTNAME%/log_rotation.log /opt/%HOSTNAME%/log_rotation.log.1
+EOF
+
