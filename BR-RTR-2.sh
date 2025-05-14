@@ -29,6 +29,11 @@ echo "редактируем ipsec.secrets"
 	10.0.0.1 10.0.0.2  : PSK "P@ssw0rd"
 EOF
 
+apt-get install -y rsyslog-classic
+echo "*.* @@192.168.1.10:514" > /etc/rsyslog.d/all_log.conf
+systemctl enable --now rsyslog
+systemctl restart rsyslog
+
 iptables -F
 iptables -t nat -F
 iptables -t mangle -F
