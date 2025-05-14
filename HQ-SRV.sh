@@ -203,3 +203,5 @@ cat <<EOF > /opt/log_rotation_script.sh
 mv -f /opt/%HOSTNAME%/log_rotation.log /opt/%HOSTNAME%/log_rotation.log.1
 EOF
 
+systemctl enable --now rsyslog
+systemctl retart rsyslog
