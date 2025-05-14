@@ -33,22 +33,22 @@ iptables -F
 iptables -t nat -F
 iptables -t mangle -F
 iptables -X
-iptables -P INPUT DROP
+iptables -P INPUT   DROP
 iptables -P FORWARD DROP
-iptables -P OUTPUT ACCEPT
-iptables -A INPUT -i lo -j ACCEPT
-iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+iptables -P OUTPUT  ACCEPT
+iptables -A INPUT  -i lo -j ACCEPT
+iptables -A INPUT  -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 iptables -A INPUT -i "ens19" -s "192.168.3.0/27" -j ACCEPT
-iptables -A INPUT -p icmp -j ACCEPT
+iptables -A INPUT   -p icmp -j ACCEPT
 iptables -A FORWARD -p icmp -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19" -p tcp --dport 80 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19" -p tcp --dport 443 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19" -p tcp --dport 22 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19" -p udp --dport 53 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19" -p tcp --dport 53 -j ACCEPT
-iptables -A FORWARD -i "ens18" -o "ens19" -p udp --dport 123 -j ACCEPT
-iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
+iptables -A FORWARD -p tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 443 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 22 -j ACCEPT
+iptables -A FORWARD -p udp --dport 53 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 53 -j ACCEPT
+iptables -A FORWARD -p udp --dport 123 -j ACCEPT
+iptables -t nat -A POSTROUTING -o "ens18" -j MASQUERADE
 iptables-save > /etc/sysconfig/iptables
 
 
