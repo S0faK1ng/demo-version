@@ -144,6 +144,59 @@ FLUSH PRIVILEGES;
 exit
 
 
+mkdir /ca
+openssl ca
+cp /var/lib/ssl/openssl.{cnf,cnf.backup}
+
+nano /var/lib/ssl/openssl.cnf
+
+В секции  [ CA_default ] 
+dir									= /ca (ca это замена первоначального текста)
+
+Выходим из редактора
+
+cd /ca
+mkdir certs newcerts crl private
+touch index.txt
+echo -n '00' > serial
+
+
+nano /var/lib/ssl/openssl.cnf
+ [ CA_default ]
+ 
+ policy								= policy_anything
+ 
+ [ policy_anything ]
+ commonName							= supplied
+ 
+ [ req_distinguished_name ]
+ 0.organizationName_default			= champ.first (раскоментировать строку и прописать текст после равно)
+ 
+ [ v3_ca ]
+ basicCanstrains = CA:true (изменение текста после равно)
+ 
+ Выходим из редактора
+ 
+ openssl req -nodes -new -out cacert.csr -keyout private/cakey.pem -extensions v3_ca
+ Enter
+ . (в данных строчках надо просто написать точку и нажать Enter)
+ .
+ Enter
+ .
+ champ.first RootCA
+ Enter
+ Enter
+ 
+ openssl ca -selfsign -in cacert.csr -out cacert.pem -extensions v3_ca 
+ yes (или просто y я не помню)
+ yes
+ 
+ Теперь отправим сертификат на HQ-CLI
+ 
+ scp /ca/cacert.crt sshuser@192.168.2.10:/home/sshuser
+
+
+
 ------HQ-CLI------
 
 nano /etc/resolv.conf
