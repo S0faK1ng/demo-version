@@ -150,7 +150,7 @@ echo 'net_admin ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
 # Настраиваем chrony
 apt-get install chrony -y
 cat <<EOF > /etc/chrony.conf
-local stratum 5
+local 192.168.44.5
 allow 192.168.1.0/26
 allow 192.168.2.0/28
 allow 172.16.5.0/28
