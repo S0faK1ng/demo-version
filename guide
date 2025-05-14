@@ -210,6 +210,9 @@ chmod +x HQ-CLI.sh
 P@ssw0rd
 P@ssw0rd
 
+ mv /home/sshuser/cacert.crt /etc/pki/ca-trust/source/anchors/
+ ls /etc/pki/ca-trust/source/anchors/
+ update-ca-trust extract
 
 
 ------BR-SRV------
