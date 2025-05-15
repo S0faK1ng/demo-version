@@ -106,9 +106,10 @@ apt-get update && apt-get install yandex-browser-stable -y || { echo 'Ошибк
 echo "Настраиваем nameserver"
 cat <<EOF | tee /etc/resolv.conf >&2
 search au-team.irpo
+nameserver 192.168.1.2
+EOF
 
 # Удаляем Python2.7
 echo "Удаляем Python2.7"
-rm /usr/bin/python2.7 -yes
-nameserver 192.168.1.2
-EOF
+rm /usr/bin/python2.7
+yes
