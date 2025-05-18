@@ -54,6 +54,28 @@ server {
 }
 EOF
 
+
+cat <<EOF > /etc/nginx/nginx.conf
+server  {
+        listen 80;
+        server_name moodle.au-team.irpo;
+
+        location / {
+            proxy_pass http://192.168.100.2:80;
+        }
+}
+
+server {
+        listen 80;
+        server_name wiki.au-team.irpo;
+
+        location / {
+            proxy_pass http://192.168.200.2:8080;
+        }
+}
+EOF
+systemctl enable --now nginx
+
 # Удаляем дефолтные файлы конфигурации Nginx
 echo "Удаляем стандартные конфиги..."
 rm -f /etc/nginx/sites-available.d/default
