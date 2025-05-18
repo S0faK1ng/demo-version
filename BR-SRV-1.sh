@@ -66,20 +66,20 @@ cat <<EOF > /etc/hosts
 EOF
 
 # Создаем новую доменную структуру с использованием samba-tool
-samba-tool domain provision
+samba-tool domain provision --use-rfc2307 --interactive
 
 # Перемещаем конфиг KRB5 в нужный каталог
 mv -f /var/lib/samba/private/krb5.conf /etc/krb5.conf
 
 # Запускаем службы Samba и добавляем их в автозагрузку
-systemctl enable smb
+systemctl enable --now smb
 systemctl start smb
 
 # Создаем дополнительные файлы автозапуска
 cat <<EOF > /etc/rc.d/rc.local
 #!/bin/sh -e
 systemctl restart network
-systemctl restart samba
+systemctl restart smb
 exit 0
 EOF
 
