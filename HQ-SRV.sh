@@ -112,10 +112,6 @@ systemctl restart nfs
 #NTP=192.168.1.1
 #EOF
 
-# Активация службы времени
-systemctl enable --now systemd-timesyncd
-timedatectl timesync-status
-
 # установка хрони
 apt-get install chrony -y
 
