@@ -111,5 +111,4 @@ EOF
 
 # Удаляем Python2.7
 echo "Удаляем Python2.7"
-rm /usr/bin/python2.7
-yes
+rm /usr/bin/python2.7 -y
