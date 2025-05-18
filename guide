@@ -143,6 +143,8 @@ GRANT ALL PRIVILEGES ON moodledb.* TO moodle;
 FLUSH PRIVILEGES;
 exit
 
+nano /var/www/html/config.php
+$CFG->wwwroot = ‘http://moodle.au-team.irpo’; (отредактировать)
 
 mkdir /ca
 openssl ca
