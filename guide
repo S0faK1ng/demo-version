@@ -216,8 +216,22 @@ P@ssw0rd
  ls /etc/pki/ca-trust/source/anchors/
  update-ca-trust extract
 
+Центр управления системой > Аутентификация > Домен Active Directory
 
-------BR-SRV------
+Домен: AU-TEAM.IRPO
+Рабочая группа: AU-TEAM
+Имя компьютера: hq-cli
+
+Восстановить файлы конфигурации по умолчанию
+123qweR%
+reboot
+
+--данные для входа--
+Administrator
+123qweR%
+-------------------
+
+-------------------------BR-SRV----------------------------
 
 nano /etc/net/ifaces/ens18/options
 
