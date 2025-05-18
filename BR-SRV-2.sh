@@ -15,6 +15,11 @@ samba-tool group addmembers hq user1.hq,user2.hq,user3.hq,user4.hq,user5.hq
 # распаковка юзеров
 unzip Users.zip
 
+cat <<EOF > /etc/sudoers.d/hq
+%hq ALL=(ALL) /usr/bin/cat, /usr/bin/grep, /usr/usr/bin/id
+%hq ALL=(ALL) NOPASSWD:/usr/bin/cat, /usr/bin/grep, /usr/bin/id
+EOF
+
 # запуск скрипта 
 csv_file="/root/Users.csv"
 while IFS=";" read -r firstName lastName role phone ou street zip city country password; do
