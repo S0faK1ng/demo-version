@@ -29,8 +29,8 @@ wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/HQ-
 chmod +x HQ-RTR-1.sh
 ./HQ-RTR-1.sh
 
-P@ssw0rd
-P@ssw0rd
+P@$$word
+P@$$word
 
 После перезапуска
 
@@ -81,8 +81,8 @@ wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/BR-
 chmod +x BR-RTR-1.sh
 ./BR-RTR-1.sh
 
-P@ssw0rd
-P@ssw0rd
+P@$$word
+P@$$word
 
 vtysh
 conf t
