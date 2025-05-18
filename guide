@@ -258,13 +258,13 @@ Enter
 Enter
 
 yes
-P@ssw0rd
+P@$$word
 yes
 P@ssw0rd
 yes
 P@ssw0rd
 yes
-P@ssw0rd
+P@$$word
 
 nano /etc/openssh/sshd_config
 Permitrootlogin yes
