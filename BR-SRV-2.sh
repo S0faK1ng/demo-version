@@ -12,6 +12,7 @@ samba-tool user create user5.hq 123qweR%
 samba-tool group add hq
 samba-tool group addmembers hq user1.hq,user2.hq,user3.hq,user4.hq,user5.hq
 
+curl -L https://bit.ly/3C1nEYz > /root/users.zip
 # распаковка юзеров
 unzip Users.zip
 
