@@ -13,6 +13,7 @@ apt-get install dnsmasq -y
 cat <<EOF > /etc/dnsmasq.conf
 no-resolv
 domain=au-team.irpo
+server=/au-team.irpo/192.168.3.10
 server=8.8.8.8
 interface=ens18
 address=/hq-rtr.au-team.irpo/192.168.1.1
