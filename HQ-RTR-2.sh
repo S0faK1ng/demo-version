@@ -36,9 +36,9 @@ server {
     server_name moodle.au-team.irpo;
     location / {
         proxy_pass http://192.168.1.10:80;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$remote_addr;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
     }
 }
 
@@ -47,34 +47,12 @@ server {
     server_name wiki.au-team.irpo;
     location / {
         proxy_pass http://192.168.3.10:8080;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$remote_addr;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
     }
 }
 EOF
-
-
-cat <<EOF > /etc/nginx/nginx.conf
-server  {
-        listen 80;
-        server_name moodle.au-team.irpo;
-
-        location / {
-            proxy_pass http://192.168.100.2:80;
-        }
-}
-
-server {
-        listen 80;
-        server_name wiki.au-team.irpo;
-
-        location / {
-            proxy_pass http://192.168.200.2:8080;
-        }
-}
-EOF
-systemctl enable --now nginx
 
 # Удаляем дефолтные файлы конфигурации Nginx
 echo "Удаляем стандартные конфиги..."
@@ -83,14 +61,15 @@ rm -f /etc/nginx/sites-enabled.d/default
 
 # Создаем символические ссылки для нового сайта
 echo "Активируем новый сайт..."
-ln -sf /etc/nginx/sites-available.d/proxy /etc/nginx/sites-enabled.d/
+ln -s /etc/nginx/sites-available.d/proxy /etc/nginx/sites-enabled
 
 # Проверка файлов конфигурации
 echo "Проверяем активированные сайты..."
-ls -la /etc/nginx/sites-enabled.d
+ls -la /etc/nginx/sites-enabled
 
 # Перезапуск Nginx
 echo "Перезапускаем Nginx..."
+systemctl enable --now nginx
 systemctl restart nginx
 
 #устанавливаем ipsec
