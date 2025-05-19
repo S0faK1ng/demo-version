@@ -146,6 +146,9 @@ exit
 nano /var/www/html/config.php
 $CFG->wwwroot = ‘http://moodle.au-team.irpo’; (отредактировать)
 
+nano /etc/php/8.2/apache2-mod_php/php.ini
+найти и отредактировать max_input_vars = 5000
+
 mkdir /ca
 openssl ca
 cp /var/lib/ssl/openssl.{cnf,cnf.backup}
