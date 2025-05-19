@@ -77,7 +77,7 @@ apt-get update && apt-get install -y strongswan
 
 #редактируем ipsec
 echo "редактируем ipsec.conf"
-сat <<EOF > /etc/strongswan/ipsec.conf
+cat <<EOF > /etc/strongswan/ipsec.conf
 
 config setup
 
@@ -97,7 +97,7 @@ EOF
 
 #редактируем ipsec.secrets
 echo "редактируем ipsec.secrets"
-сat <<EOF > /etc/strongswan/ipsec.secrets
+cat <<EOF > /etc/strongswan/ipsec.secrets
 	10.0.0.1 10.0.0.2  : PSK "P@ssw0rd"
 EOF
 
