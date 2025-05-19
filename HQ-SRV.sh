@@ -27,6 +27,12 @@ ptr-record=6.2.168.192.in-addr.arpa,hq-cli.au-team.irpo
 address=/br-srv.au-team.irpo/192.168.3.10
 EOF
 
+cat <<EOF > /etc/hosts
+127.0.0.1       localhost.localdomain localhost
+::1       localhost6.localdomain localhost6
+192.168.1.1       hq-rtr.au-team.irpo
+EOF
+
 # Рестарт службы DNSmasq
 systemctl enable --now dnsmasq
 systemctl restart dnsmasq
