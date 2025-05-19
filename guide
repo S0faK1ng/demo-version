@@ -50,15 +50,6 @@ no ip ospf passive
 ex
 do wr mem
 
-router ospf6
-ospf6 router-id 172.16.4.2
-ex
-int iptunnel
-ipv6 ospf6 area 0
-int ens18
-ipv6 ospf6 area 0
-ex
-do wr mem
 
 ----BR-RTR-1-------
 
@@ -98,17 +89,6 @@ no ip ospf passive
 ex
 do wr mem
 
-router ospf6
-ospf6 router-id 172.16.5.2
-ex
-int iptunnel
-ipv6 ospf6 area 0
-int ens18
-ipv6 ospf6 area 0
-ex
-do wr mem
-
-
 
 ------HQ-SRV------
 
@@ -144,11 +124,34 @@ GRANT ALL PRIVILEGES ON moodledb.* TO moodle;
 FLUSH PRIVILEGES;
 exit
 
-nano /var/www/html/config.php
-$CFG->wwwroot = ‘http://moodle.au-team.irpo’; (отредактировать)
+##nano /var/www/html/config.php
+##$CFG->wwwroot = ‘http://moodle.au-team.irpo’; (отредактировать)
 
 nano /etc/php/8.2/apache2-mod_php/php.ini
 найти и отредактировать max_input_vars = 5000
+
+systemctl restart httpd2
+
+через hq-cli http://192.168.1.2/
+\\\
+Название базы данных:		moodledb
+Пользователь базы данных:		moodle
+Пароль:					P@ssw0rd
+\\\
+Логин:				admin
+Новый пароль:			P@ssw0rd
+Имя:					Администратор (можно любое)
+Фамилия:				Пользователь (можно любое)
+Адрес электронной почты:	test.test@mail.ru (можно любое)
+\\\
+Полное название сайта:		2 (согласно вашему рабочему месту)
+Краткое название сайта:		moodle (можно любое)
+Настройки местоположения:        Азия/Красноярск (согласно вашему региону)
+Контакты службы поддержки:	test.test@mail.ru (можно любое)
+
+дальше 3 модуль он нам не нужен
+\\\\\\\\\\\\\\\\\
+
 
 mkdir /ca
 openssl ca
@@ -200,7 +203,7 @@ nano /var/lib/ssl/openssl.cnf
  Теперь отправим сертификат на HQ-CLI
  
  scp /ca/cacert.crt sshuser@192.168.2.10:/home/sshuser
-
+///
 
 
 ------HQ-CLI------
@@ -216,10 +219,6 @@ chmod +x HQ-CLI.sh
 P@ssw0rd
 P@ssw0rd
 
- mv /home/sshuser/cacert.crt /etc/pki/ca-trust/source/anchors/
- ls /etc/pki/ca-trust/source/anchors/
- update-ca-trust extract
-
 Центр управления системой > Аутентификация > Домен Active Directory
 
 Домен: AU-TEAM.IRPO
@@ -234,6 +233,12 @@ reboot
 Administrator
 123qweR%
 -------------------
+
+3 модуль//
+ mv /home/sshuser/cacert.crt /etc/pki/ca-trust/source/anchors/
+ ls /etc/pki/ca-trust/source/anchors/
+ update-ca-trust extract
+//
 
 -------------------------BR-SRV----------------------------
 
@@ -295,14 +300,26 @@ service sshd restart
 -------------(Если дальше будет не понятно смотрите гайд от абакана 
 пункт с mediawiki)-----------
 
-на HQ-CLI 192.168.3.10:8080 заполняем по файлу из BR-SRV (nano wiki.yml)
+на HQ-CLI 192.168.3.10:8080 заполняем 
 
-Скачиваем LocalSettings.php
-перекидываем в папку без кирилицы
-например /home/user/
+Хост базы данных:
+mariadb
+Имя базы данных (без дефисов):
+mediawiki
+Имя пользователя базы данных:
+wiki
+Пароль базы данных:
+WikiP@ssw0rd
+/////
+mwiki (можно своё название)
+Ваше имя участника:
+wiki
+Пароль:
+WikiP@ssw0rd
+////
 
 на HQ-CLI
-scp -P 2024 /home/user/localsettings.php sshuser@192.168.3.2:/root/
+scp -P 2024 /home/AU-TEAM.IRPO/administrator/Загрузки/localsettings.php sshuser@192.168.3.2:/root/
 
 
 nano /etc/openssh/sshd_config
