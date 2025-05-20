@@ -35,29 +35,6 @@ mount -a && mount -v || { echo 'Ошибка монтирования!'; exit 1;
 echo "Тестовая запись файла..."
 touch /mnt/nfs/bbbbb || { echo 'Ошибка записи файла!'; exit 1; }
 
-# Отключаем службу Chrony
-echo "Отключаем службу Chrony..."
-systemctl disable --now chronyd || { echo 'Ошибка отключения Chrony!'; exit 1; }
-
-# Устанавливаем Systemd Timesync
-echo "Устанавливаем Systemd Timesync..."
-apt-get update && apt-get install systemd-timesyncd -y || { echo 'Ошибка установки Systemd Timesync!'; exit 1; }
-
-# Настраиваем конфиг timesyncd
-echo "Настраиваем timesyncd..."
-cat <<EOF | tee /etc/systemd/timesyncd.conf >&2
-[Time]
-NTP=192.168.1.1
-EOF
-
-# Активируем сервис TimeSync
-echo "Активируем сервис TimeSync..."
-systemctl enable --now systemd-timesyncd || { echo 'Ошибка активации TimeSync!'; exit 1; }
-
-# Статус синхронизации времени
-echo "Просмотр состояния синхронизации времени..."
-timedatectl timesync-status
-
 # Создаем пользователя SSH
 echo "Создаем пользователя SSH..."
 useradd sshuser -u 1010 || { echo 'Ошибка добавления пользователя!'; exit 1; }
