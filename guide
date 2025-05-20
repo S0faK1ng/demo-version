@@ -35,6 +35,10 @@ P@$$word
 
 После перезапуска
 
+nano /etc/frr/daemons
+переводим ospfd=no в ospfd=yes
+
+
 vtysh
 conf t
 router ospf
@@ -79,6 +83,9 @@ chmod +x BR-RTR-1.sh
 
 P@$$word
 P@$$word
+
+nano /etc/frr/daemons
+переводим ospfd=no в ospfd=yes
 
 vtysh
 conf t
