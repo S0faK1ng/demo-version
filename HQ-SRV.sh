@@ -125,7 +125,6 @@ apt-get install chrony -y
 cat <<EOF > /etc/chrony.conf
 pool 172.16.4.2 iburst
 driftfile /var/lib/chrony/drift
-makestep
 rtcsync
 ntsdumpdir /var/lib/chrony
 logdir /var/log/chrony
