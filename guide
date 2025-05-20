@@ -48,6 +48,10 @@ int iptunnel
 no ip ospf network broadcast
 no ip ospf passive
 ex
+int gre0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 P@ssw0rd
+ex
 do wr mem
 
 
@@ -86,6 +90,10 @@ ex
 int iptunnel
 no ip ospf network broadcast
 no ip ospf passive
+ex
+int gre0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 P@ssw0rd
 ex
 do wr mem
 
