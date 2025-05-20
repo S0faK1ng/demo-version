@@ -84,6 +84,24 @@ hq-rtr ansible_host=net_admin@192.168.1.1 ansible_port=22
 br-rtr ansible_host=net_admin@192.168.3.1 ansible_port=22
 EOF
 
+cat <<EOF > /root/inventory.yml
+---
+- name: Инвентаризация машин HQ-SRV и HQ-CLI
+  hosts:
+    - hq-srv
+    - hq-cli
+  gather_facts: yes
+  tasks:
+    - name: Создать отчёт с информацией рабочем месте
+      delegate_to: localhost
+      copy:
+        dest: "/etc/ansible/PC_INFO/{{ ansible_hostname }}.yml"
+        content: |
+          ---
+          Имя компьютера: "{{ ansible_hostname }}"
+          IP-адрес компьютера: "{{ ansible_default_ipv4.address }}"
+EOF
+
 # Настройки Python-интерпретатора для Ansible
 cat <<EOF > /etc/ansible/ansible.cfg
 [defaults]
