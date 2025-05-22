@@ -9,6 +9,9 @@ apt-get update
 # Установка пакета DNSmasq
 apt-get install dnsmasq -y
 
+wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/samba-migrate
+chmod +x samba-migrate
+
 # Редактирование файла конфигурации DNSmasq
 cat <<EOF > /etc/dnsmasq.conf
 no-resolv
