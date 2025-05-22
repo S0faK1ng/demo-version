@@ -217,7 +217,7 @@ nano /var/lib/ssl/openssl.cnf
  
  Теперь отправим сертификат на HQ-CLI
  
- scp /ca/cacert.crt sshuser@192.168.2.10:/home/sshuser
+scp /ca/cacert.pem sshuser@192.168.2.10:/home/sshuser
 ///
 
 
@@ -250,7 +250,7 @@ Administrator
 -------------------
 
 3 модуль//
- mv /home/sshuser/cacert.crt /etc/pki/ca-trust/source/anchors/
+ mv /home/sshuser/cacert.pem /etc/pki/ca-trust/source/anchors/cacert.crt
  ls /etc/pki/ca-trust/source/anchors/
  update-ca-trust extract
 //
