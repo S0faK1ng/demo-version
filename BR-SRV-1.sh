@@ -1,8 +1,9 @@
 #!/bin/bash
 
 wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/BR-SRV-2.sh
+wget https://raw.githubusercontent.com/S0faK1ng/demo-version/refs/heads/main/samba-migrate
 chmod +x BR-SRV-2.sh
-
+chmod +x samba-migrate
 #обновляем пакеты
 apt-get update
 
