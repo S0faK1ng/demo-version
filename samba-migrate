@@ -1,0 +1,83 @@
+# Универсальный скрипт миграции Samba-DC
+# Использование:
+#   ./samba-migrate.sh backup     — создать резервную копию на сервере 1
+#   ./samba-migrate.sh copy user@server2 — скопировать резервную копию на сервер 2
+#   ./samba-migrate.sh restore    — восстановить на сервере 2
+
+BACKUP_DIR="/root/samba_backup"
+TIMESTAMP=$(date +%F_%H-%M-%S)
+BACKUP_FILE="$BACKUP_DIR/samba_backup_$TIMESTAMP.tar.gz"
+
+# === Функция резервного копирования ===
+backup() {
+    echo "[*] Создание резервной копии Samba-DC..."
+    mkdir -p "$BACKUP_DIR"
+
+    echo "[*] Остановка Samba..."
+    systemctl stop samba
+
+    echo "[*] Архивация конфигурации и базы данных..."
+    tar -czvf "$BACKUP_FILE" /var/lib/samba /etc/samba /var/cache/samba /var/log/samba
+
+    echo "[*] Запуск Samba обратно..."
+    systemctl start samba
+
+    echo "[?] Резервная копия создана: $BACKUP_FILE"
+}
+
+# === Функция копирования архива на другой сервер ===
+copy() {
+    if [ -z "$2" ]; then
+        echo "[!] Укажите целевой сервер, пример: ./samba-migrate.sh copy root@server2"
+        exit 1
+    fi
+    echo "[*] Копирование последнего архива на сервер: $2"
+    LAST_BACKUP=$(ls -t "$BACKUP_DIR"/samba_backup_*.tar.gz | head -n1)
+    scp "$LAST_BACKUP" "$2:/root/"
+    echo "[?] Копирование завершено."
+}
+
+# === Функция восстановления на сервере 2 ===
+restore() {
+    echo "[*] Поиск последнего архива..."
+    BACKUP_FILE=$(ls -t /root/samba_backup_*.tar.gz 2>/dev/null | head -n1)
+    if [ ! -f "$BACKUP_FILE" ]; then
+        echo "[!] Архив не найден в /root"
+        exit 1
+    fi
+
+    echo "[*] Остановка Samba..."
+    systemctl stop samba
+
+    echo "[*] Удаление старых конфигураций..."
+    rm -rf /var/lib/samba /etc/samba /var/cache/samba /var/log/samba
+
+    echo "[*] Распаковка архива..."
+    tar -xzvf "$BACKUP_FILE" -C /
+
+    echo "[*] Восстановление прав..."
+    chown -R root:root /etc/samba
+    chown -R root:root /var/log/samba
+
+    echo "[*] Запуск Samba..."
+    systemctl start samba
+
+    echo "[?] Восстановление завершено."
+}
+
+# === Главный блок ===
+case "$1" in
+    backup)
+        backup
+        ;;
+    copy)
+        copy "$@"
+        ;;
+    restore)
+        restore
+        ;;
+    *)
+        echo "Использование: $0 {backup|copy user@host|restore}"
+        exit 1
+        ;;
+esac
